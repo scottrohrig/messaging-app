@@ -1,0 +1,29 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#00ffc8",
+    "titleBar.activeForeground": "#ff008c",
+    "titleBar.inactiveBackground": "#13e2b5",
+    "titleBar.inactiveForeground": "#e8e8e8",
+    "statusBar.background": "#00ffc8",
+    "statusBar.foreground": "#ff008c",
+    "statusBarItem.activeBackground": "#006650",
+    "statusBarItem.hoverBackground": "#00a17e"
+  },
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 2000,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.cursorBlinking": "phase",
+  "editor.cursorSmoothCaretAnimation": true,
+  "editor.minimap.renderCharacters": false,
+  "editor.parameterHints.enabled": false,
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "editor.rulers": [78],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"]
+}
