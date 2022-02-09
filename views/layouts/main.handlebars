@@ -1,0 +1,36 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>tella</title>
+    {{! TODO:
+        [ ]: ⬅ mark this as commpleted by changing the '[ ]' to '[*]'
+        [ ]: import the /stylesheets/style.css file
+        [ ]: link to bootstrap
+    }}
+  </head>
+  <body>
+
+    {{!
+I'm the main layout.
+I wrap the content on every page
+(e.g., header/footer),
+unless another layout is specified
+}}
+
+    <div class='container'>
+      {{{body}}}
+      {{!-- ⬆ '{{{body}}}' tells handlebars
+        where in this 'main' layout the views will go
+        (e.g., the 'home' view, the 'conversation' view
+        will be embedded here when the 'main' layout
+        is specified) --}}
+    </div>
+
+    {{! TODO:
+        [ ]: conditionally include the '/scripts/index.js' file
+            using handlebars built-in '#if' the user is 'loggedIn'
+        }}
+  </body>
+</html>
