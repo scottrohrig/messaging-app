@@ -41,6 +41,7 @@ const messageData = [
     conversation_id: 3,
   },
   {
+    // AEROPLANE
     message_text:
       'Take the wheel mickey! I gotta get on the wing and fix the flap!',
     user_id: 3,
@@ -52,6 +53,7 @@ const messageData = [
     conversation_id: 4,
   },
   {
+    // PANCAKES
     message_text: "Who's hungry boys, I'm making pancakes!",
     user_id: 2,
     conversation_id: 5,
@@ -72,6 +74,7 @@ const messageData = [
     conversation_id: 5,
   },
   {
+    // DISNEYLAND
     message_text: 'Disneyland 2022!!',
     user_id: 1,
     conversation_id: 6,
