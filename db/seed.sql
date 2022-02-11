@@ -57,7 +57,18 @@ VALUES
     (1, 1),
     (2, 1),
     (1, 2),
-    (4, 2);
+    (4, 2),
+    (3, 3),
+    (2, 3),
+    (3, 4),
+    (1, 4),
+    (2, 5),
+    (1, 5),
+    (3, 5),
+    (4, 5),
+    (1, 6),
+    (3, 6),
+    (2, 6);
 
 INSERT INTO message (message_text, sender_id, conversation_id)
 VALUES
@@ -100,7 +111,6 @@ VALUES
 -- LEFT JOIN user ON message.sender_id = user.id
 -- WHERE msg.conversation_id
 -- ;
-
 
 -- get a single user
 -- get all the conversations for that user
