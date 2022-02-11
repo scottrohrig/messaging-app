@@ -3,12 +3,12 @@ const { Conversation } = require('../models');
 
 // TODO: [*]: populate conversationData array
 const conversationData = [
-  'Play House',
-  'Dog',
-  'Swimming',
-  'Aeroplane',
-  'Pancakes',
-  'Disneyland!',
+  { conversation_name: 'Play House' },
+  { conversation_name: 'Dog' },
+  { conversation_name: 'Swimming' },
+  { conversation_name: 'Aeroplane' },
+  { conversation_name: 'Pancakes' },
+  { conversation_name: 'Disneyland!' },
 ];
 
 const seedConversations = () => Conversation.bulkCreate(conversationData);
