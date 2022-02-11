@@ -16,21 +16,20 @@ Conversation.init(
     conversation_name{
         type: DataTypes.STRING,
         allowNull: false,
-        //look up how to set up default
     },
-    user_id: {
+/*     user_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
             model: 'user',
             key: 'id'
         }
-    }
-    },
+    }, */
         sequelize,
         timestamps: true,
         freezeTableName: true,
         underscored: true,
-        modelName: 'message'
+        modelName: 'conversation'
     }
 );
 // modularize this script by exporting Conversation
