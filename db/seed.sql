@@ -43,6 +43,22 @@ VALUES
     ('Pancakes'),
     ('Disneyland!');
 
+CREATE TABLE participants (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    conversation_id INTEGER not NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (conversation_id) REFERENCES conversation(id)
+);
+
+INSERT INTO participants (user_id, conversation_id)
+VALUES
+    (3, 1),
+    (1, 1),
+    (2, 1),
+    (1, 2),
+    (4, 2);
+
 INSERT INTO message (message_text, sender_id, conversation_id)
 VALUES
     -- PLAYHOUSE
@@ -69,9 +85,37 @@ VALUES
     ('I hate disneyland..!@%?!', 2, 6);
 
 
+-- -- GET all messages details
+-- SELECT
+--     message.message_text, user.username, conversation.conversation_name
+-- FROM message
+-- LEFT JOIN user ON message.sender_id = user.id
+-- LEFT JOIN conversation ON message.conversation_id = conversation.id;
+
+-- -- GET all conversation of a single user
+-- SELECT
+--     msg.message_text,
+--     user.username
+-- FROM message AS msg
+-- LEFT JOIN user ON message.sender_id = user.id
+-- WHERE msg.conversation_id
+-- ;
+
+
+-- get a single user
+-- get all the conversations for that user
+-- get table for each conversation id
 
 SELECT
-    message.message_text, user.username, conversation.conversation_name
-FROM message
-LEFT JOIN user ON message.sender_id = user.id
-LEFT JOIN conversation ON message.conversation_id = conversation.id;
+    conversation_id
+FROM participants
+WHERE user_id = 4;
+
+-- using conversation id's
+-- get all messages matching convo id
+SELECT
+    msg.message_text,
+    user.username
+FROM message AS msg
+LEFT JOIN user ON msg.sender_id = user.id
+WHERE conversation_id = 2;
