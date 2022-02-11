@@ -1,5 +1,7 @@
 // import each Model
 const User = require('./User');
+const Conversation = require('./Conversation');
+const Message = require('./Message');
 
 // setup User associations
 // user has many conversations
