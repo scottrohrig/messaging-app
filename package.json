@@ -7,7 +7,8 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "db": "mysql -u root -p < db/schema.sql",
-    "seed": "mysql -u root -p < db/seeds.sql",
+    "seed": "node seeds/index.js",
+    "seedsql": "mysql -u root -p < db/seed.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
