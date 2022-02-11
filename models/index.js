@@ -16,10 +16,10 @@ User.hasMany(Message, {
 });
 // setup Conversation associations
 // conversation has many users
-Conversation.hasMany(User, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE',
-});
+// Conversation.hasMany(User, {
+//   foreignKey: 'user_id',
+//   onDelete: 'CASCADE',
+// });
 // conversation has many messages
 Conversation.hasMany(Message, {
   foreignKey: 'user_id',
@@ -29,7 +29,7 @@ Conversation.hasMany(Message, {
 // setup message associations
 // message belongs to one conversation
 Message.belongsTo(Conversation, {
-  foreignKey: 'user_id',
+  foreignKey: 'conversation_id',
 });
 // message belongs to one user
 Message.belongsTo(User, {
