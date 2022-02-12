@@ -10,7 +10,7 @@ CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL
+    password VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE conversation (
