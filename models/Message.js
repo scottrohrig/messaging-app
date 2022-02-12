@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 // require sequelize from connection.js
 const sequelize = require('../config/connection');
 // define the Message class that extends Model
-class Message extend Model {}
+class Message extends Model {}
 
 // initialize the Message columns and options
 Message.init(
