@@ -2,5 +2,6 @@
   "arrowParens": "always",
   "semi": true,
   "singleQuote": true,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "tabWidth": 2
 }
