@@ -4,6 +4,7 @@ require('dotenv').config();
 
 let sequelize;
 
+// if Live on Heroku use JAWSDB_URL, else use localhost port 3001
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
   // eslint-disable-next-line no-console
