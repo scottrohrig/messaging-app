@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    const match = user.checkPassword(req.body.password);
+    const match = await user.checkPassword(req.body.password);
 
     if (!match) {
       res.status(400).json({ message: `Password Valid: ${match}` });
