@@ -8,9 +8,9 @@ const sequelize = require('../config/connection');
 // define the User class that extends Model
 class User extends Model {
   // create an instance method that checks the password
-  // eslint-disable-next-line class-methods-use-this
-  checkPassword(loginPw) {
-    // return compared password from bcrypt. Consider making this asynchronous
+  async checkPassword(loginPw) {
+    const match = await bcrypt.compare(loginPw, this.password);
+    return match;
   }
 }
 
@@ -35,7 +35,7 @@ User.init(
       allowNull: false,
       unique: true,
       validate: {
-        len: [2, 20],
+        len: [2],
       },
     },
     password: {
@@ -49,6 +49,11 @@ User.init(
   {
     hooks: {
       async beforeCreate(newUserData) {
+        // eslint-disable-next-line no-param-reassign
+        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        return newUserData;
+      },
+      async beforeUpdate(newUserData) {
         // eslint-disable-next-line no-param-reassign
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
         return newUserData;
