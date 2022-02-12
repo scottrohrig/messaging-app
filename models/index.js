@@ -10,6 +10,16 @@ User.hasMany(Conversation, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE',
 });
+
+// equivalent
+// CREATE TABLE conversation (
+//   id pk ...,
+//   name st...,
+//   fk (user_id) REFERENCES user(id) ON delete cascade
+// ) socket.io for push messages.
+
+// have something running and if there's something new add it to the existing array rather than doing a page refresh. That way 
+
 // user has many messages
 User.hasMany(Message, {
   foreignKey: 'user_id',
@@ -23,7 +33,7 @@ User.hasMany(Participant, {
 // setup Conversation associations
 // conversation has many users
 // Conversation.hasMany(User, {
-//   foreignKey: 'user_id',
+//   foreignKey: 'conversation_id',
 //   onDelete: 'CASCADE',
 // });
 // conversation has many messages
