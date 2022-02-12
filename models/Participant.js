@@ -33,3 +33,5 @@ Participant.init(
     modelName: 'participant',
   }
 );
+
+module.exports = Participant;
