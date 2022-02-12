@@ -23,6 +23,20 @@ I wrap the content on every page
 unless another layout is specified
 }}
 
+
+<header>
+      <h1>
+        {{!-- logo/icon --}}
+        <a href="/">tella</a>
+      </h1>
+      <nav>
+        {{#if loggedIn}}
+        <a href="/dashboard">dashboard</a>
+        <button id="sign out" class="btn-no-style">sign out</button>
+        {{/if}}
+      </nav>
+    </header>
+
     <div class='container'>
       {{{body}}}
       {{!-- ⬆ '{{{body}}}' tells handlebars
