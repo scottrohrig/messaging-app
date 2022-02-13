@@ -1,14 +1,24 @@
 {
   "extends": ["airbnb-base", "prettier"],
-  "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "tabWidth": 2
+      },
+      {
+        "usePrettierrc": true
+      }
+    ],
     "arrow-body-style": "off",
     "prefer-arrow-callback": "off",
     "no-unused-vars": "warn",
     "array-bracket-spacing": "warn",
     "func-names": "off",
     "quotes": ["error", "single"],
-    "comma-dangle": "off"
-  }
+    "comma-dangle": "off",
+    "indent": ["error", 2]
+    },
+  "plugins": ["prettier"]
 }
