@@ -18,7 +18,10 @@ User.hasMany(Conversation, {
 //   fk (user_id) REFERENCES user(id) ON delete cascade
 // ) socket.io for push messages.
 
-// have something running and if there's something new add it to the existing array rather than doing a page refresh. That way 
+// have something running and if there's something
+// new add it to the existing array rather than doing
+// a page refresh. That way the user can still use the
+// the app while the push is loading in the bg.
 
 // user has many messages
 User.hasMany(Message, {
