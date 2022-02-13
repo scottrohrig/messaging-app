@@ -5,3 +5,14 @@
          so that the message will format right-aligned,
          otherwise it will be left-aligned
 }}
+
+
+{{#if loggedIn}}
+<form class="message-form">
+    <div>
+        <button type="send">
+            {{!-- <img> / send arrow button icon --}}
+        </button>
+    </div>
+</form>
+{{/if}}
