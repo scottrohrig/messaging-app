@@ -20,9 +20,11 @@ wrap around me.
 
 <section>
      <h2>Messages</h2>
-     <ol>
+     <ol class="messsage-display">
           {{#each message as |message|}}
+          <li>
           {{> conversation-details}}
+          </li>
           {{/each}}
      </ol>
 </section>

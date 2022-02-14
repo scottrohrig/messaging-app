@@ -16,14 +16,15 @@ TODO:
     [ ]: and the last column should have a div with the delete icon center-aligned
  --}}
 <li>
-        <div>
-               profilepic
+        <div class="avatar">
+               {{!-- <img src="/images/{{pfp}}"> --}}
         </div>
 
-        <div>
+        <div class="message-content">
+
                message: username timestamp and message text
         </div>
-        <div>
-               delete button
+        <div class="deletebtn">
+               <button type="button" class="delete-btn"><i class="fa fa-trash"></i></button>
         </div>
 </li>
