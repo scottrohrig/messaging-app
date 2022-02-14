@@ -9,6 +9,7 @@
     <!--Bootstrap-->
     <link
       rel='stylesheet'
+<<<<<<< HEAD
       href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
       integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T'
       crossorigin='anonymous'
@@ -20,9 +21,18 @@
         [*]: import the /stylesheets/style.css file
         [*]: link to bootstrap
         }}
+=======
+      href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css'
+      integrity='sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=='
+      crossorigin='anonymous'
+      referrerpolicy='no-referrer'
+    />
+>>>>>>> c8892acadd0710c3bf941ffd1fcfd7844397a30e
   </head>
   <body>
+    <div class='container'>
 
+<<<<<<< HEAD
     {{!
 I'm the main layout.
 I wrap the content on every page
@@ -41,24 +51,81 @@ unless another layout is specified
         {{/if}}
       </nav>
     </header>
+=======
+      <!--Header/Nav-->
+      <!--src: https://mdbootstrap.com/snippets/jquery/mdbootstrap/888407#html-tab-view (not updated for BS v5)-->
+      <header>
+        <!--Navbar-->
+        <nav class='navbar navbar-light lighten-4'>
+>>>>>>> c8892acadd0710c3bf941ffd1fcfd7844397a30e
 
-    <div class='container'>
-      {{{body}}}
-      {{!-- ⬆ '{{{body}}}' tells handlebars
-        where in this 'main' layout the views will go
-        (e.g., the 'home' view, the 'conversation' view
-        will be embedded here when the 'main' layout
-        is specified) --}}
-    </div>
+          <!-- Navbar brand -->
+          <a class='navbar-brand' href='#'>
+            <img
+              src='/icons/tella.png'
+              alt='tella'
+              style='width: 48px; height: 48px'
+            />
+            tella
+          </a>
 
-    {{! TODO:
-        [ ]: conditionally include the '/scripts/index.js' file
-            using handlebars built-in '#if' the user is 'loggedIn'
-        }}
+          <!-- Collapse button -->
+          <button
+            class='navbar-toggler toggler-example'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarSupportedContent1'
+            aria-controls='navbarSupportedContent1'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+          ><span class='dark-blue-text'><i
+                class='fas fa-bars fa-1x'
+              ></i></span></button>
 
+          <!-- Collapsible content -->
+          <div class='collapse navbar-collapse' id='navbarSupportedContent1'>
+
+            <!-- Links -->
+            <ul class='navbar-nav mr-auto'>
+              <li class='nav-item active'>
+                <a class='nav-link active' href='#'>Home
+                  <span class='visually-hidden-focusable'>(current)</span></a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='#'>Profile</a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='#'>Settings</a>
+              </li>
+              <li class='nav-item'>
+                {{#if loggedIn}}
+                  <a class='nav-link' href='#'>logout</a>
+                {{else}}
+                  <a href='#'>login</a>
+                {{/if}}
+              </li>
+            </ul>
+
+<<<<<<< HEAD
     {{#if loggedIn}}
       <script src='/scripts/logout.js'></script>
       <script src='/scripts/index.js'></script>
+=======
+          </div>
+
+        </nav>
+      </header>
+
+      <!--Main Content-->
+      <div class='container'>
+        {{{body}}}
+      </div>
+
+    </div>
+
+    {{#if loggedIn}}
+      <script src='/scripts/logout.js'></script>
+>>>>>>> c8892acadd0710c3bf941ffd1fcfd7844397a30e
     {{/if}}
 
     <script
@@ -72,9 +139,16 @@ unless another layout is specified
       crossorigin='anonymous'
     ></script>
     <script
+<<<<<<< HEAD
       src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
       integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
       crossorigin='anonymous'
+=======
+      src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js'
+      integrity='sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=='
+      crossorigin='anonymous'
+      referrerpolicy='no-referrer'
+>>>>>>> c8892acadd0710c3bf941ffd1fcfd7844397a30e
     ></script>
 
   </body>
