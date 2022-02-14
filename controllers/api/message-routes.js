@@ -1,7 +1,36 @@
 const router = require('express').Router();
-const { User, Conversation, Participant } = require('../../models');
+const { User, Conversation, Message, Participant } = require('../../models');
 
 // GET all message
+router.get('/', async (req, res) => {
+  try {
+    const messages = await Message.findAll({});
+
+    res.json(messages);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
+// GET all messages by conversation_id
+router.get('/:id', async (req, res) => {
+  try {
+    const messages = await Message.findAll({
+      where: { conversation_id: req.params.id },
+      // order: [['updated_at', 'DESC']],
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
+
+    res.json(messages);
+  } catch (err) {
+    res.json(err);
+  }
+});
 
 // GET message by id
 
@@ -15,14 +44,6 @@ const { User, Conversation, Participant } = require('../../models');
 //     conversation_id
 // FROM participants
 // WHERE user_id = 4;
-router.get('/:id', (req, res) => {
-  // are
-  Participant.findAll({
-    where: { user_id: req.session.user_id },
-
-  })
-  .then(({conversation_id}) => {conversat})
-});
 
 // for each conversation_id
 // GET all messages matching conversation_id
