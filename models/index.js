@@ -6,10 +6,11 @@ const Participant = require('./Participant');
 
 // setup User associations
 // user has many conversations
-User.hasMany(Conversation, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE',
-});
+// !! This sets up a use_id field on the conversation table (with a null value...)
+// User.hasMany(Conversation, {
+//   foreignKey: 'user_id',
+//   onDelete: 'CASCADE',
+// });
 
 // equivalent
 // CREATE TABLE conversation (
@@ -41,11 +42,11 @@ User.hasMany(Participant, {
 // });
 // conversation has many messages
 Conversation.hasMany(Message, {
-  foreignKey: 'user_id',
+  foreignKey: 'conversation_id',
   onDelete: 'CASCADE',
 });
 
-Conversation.hasMany(Participant, {
+Conversation.hasOne(Participant, {
   foreignKey: 'conversation_id',
 });
 
