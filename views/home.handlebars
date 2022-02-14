@@ -13,7 +13,17 @@ wrap around me.
          to show each 'conversation'
     [ ]: then add the conversation-details
          partial
-}}
+  }}
 
 <h1>testing tella</h1>
 {{! ⬆ you may delete me, I'm just making sure the page loads and shows content :D }}
+
+<section class="card">
+     <h2 class="card-header">conversations</h2>
+     <ol class="list-group">
+          {{#each conversations as |conversation|}}
+          {{> conversation-details}}
+          </li>
+          {{/each}}
+     </ol>
+</section>
