@@ -18,11 +18,11 @@ TODO:
 <li class='list-group-item'>
   {{!-- {{#each this}} --}}
   <div class='row'>
-    <div>
-      profilepic
+    <div class='avatar'>
+      {{!-- <img src="/images/{{pfp}}"> --}}
     </div>
 
-    <div>
+    <div class='message-content'>
       <p class='title'>{{user.username}}</p>
       <p>
         {{conversation.conversation_name}}
@@ -34,10 +34,11 @@ TODO:
         {{/each}}
       </p>
     </div>
-    <div>
-      delete button
+    <div class='deletebtn'>
+      <button type='button' class='delete-btn'><i
+          class='fa fa-trash'
+        ></i></button>
     </div>
   </div>
   {{!-- {{/each}} --}}
 </li>
-
