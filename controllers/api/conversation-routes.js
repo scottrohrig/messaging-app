@@ -1,6 +1,11 @@
+const { Conversation } = require('../../models');
+
 const router = require('express').Router;
 
 // GET all conversations
+router.get('/', async (req, res) => {
+  Conversation.findAll
+}
 
 // GET conversation by id
 
