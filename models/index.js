@@ -2,6 +2,7 @@
 const User = require('./User');
 const Conversation = require('./Conversation');
 const Message = require('./Message');
+const Participant = require('./Participant');
 
 // setup User associations
 // user has many conversations
@@ -14,6 +15,11 @@ User.hasMany(Message, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE',
 });
+
+User.hasMany(Participant, {
+  foreignKey: 'user_id',
+});
+
 // setup Conversation associations
 // conversation has many users
 // Conversation.hasMany(User, {
@@ -26,6 +32,18 @@ Conversation.hasMany(Message, {
   onDelete: 'CASCADE',
 });
 
+Conversation.hasMany(Participant, {
+  foreignKey: 'conversation_id',
+});
+
+// Participants associations
+Participant.belongsTo(Conversation, {
+  foreignKey: 'conversation_id',
+});
+Participant.belongsTo(User, {
+  foreignKey: 'user_id',
+});
+
 // setup message associations
 // message belongs to one conversation
 Message.belongsTo(Conversation, {
@@ -36,4 +54,4 @@ Message.belongsTo(User, {
   foreignKey: 'user_id',
 });
 // modularize this file by exporting an object containing each Model
-module.exports = { User, Conversation, Message };
+module.exports = { User, Conversation, Message, Participant };
