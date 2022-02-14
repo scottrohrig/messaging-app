@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
       conversation.get({ plain: true })
     );
     console.log(conversations);
-    res.render('home', conversations);
+    res.render('home', { conversations });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }

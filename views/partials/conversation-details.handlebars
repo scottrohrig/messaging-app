@@ -15,15 +15,28 @@ TODO:
     [ ]: the message content should have the: username, timestamp & message text
     [ ]: and the last column should have a div with the delete icon center-aligned
  --}}
-<li>
-        <div>
-               profilepic
-        </div>
+<li class='list-group-item'>
+  {{!-- {{#each this}} --}}
+  <div class='row'>
+    <div>
+      profilepic
+    </div>
 
-        <div>
-               message: username timestamp and message text
-        </div>
-        <div>
-               delete button
-        </div>
+    <div>
+      <p class='title'>{{user.username}}</p>
+      <p>
+        {{conversation.conversation_name}}
+      </p>
+      <p>
+        {{#each conversation.messages}}
+          {{message_text}}
+          <span>{{updated_at}}</span>
+        {{/each}}
+      </p>
+    </div>
+    <div>
+      delete button
+    </div>
+  </div>
+  {{!-- {{/each}} --}}
 </li>
