@@ -18,15 +18,17 @@
 --}}
 
 <form class='message-form'>
-
-  <div>
-    <textarea name='message-body'></textarea>
-  </div>
-
-  <div class='send-btn'>
-    <button type='button' class='send'>
+<input type="text" class="sender" placeholder="tella">
+    <button type='submit' class='send'>
       <i class='fas fa-arrow-alt-circle-up'></i>
     </button>
-  </div>
-
 </form>
+
+<div class="sender">
+{{message}}
+</div>
+
+
+
+
+<script src="/public/scripts/message.js"></script>
