@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Conversation, Message } = require('../../models');
+const { User, Conversation, Message, Participant } = require('../../models');
 
 // GET all conversations
 router.get('/', (req, res) => {
