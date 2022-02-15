@@ -5,6 +5,7 @@ const { User, Conversation, Message, Participant } = require('../models');
 router.get('/', async (req, res) => {
   try {
     const dbConversations = await Participant.findAll({
+      // TODO: [ ] use req.session.user_id
       where: { user_id: 1 },
       include: [
         {
@@ -35,7 +36,6 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    // TODO: [ ] render conversations list instead of returning json
     // res.json(conversations);
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })

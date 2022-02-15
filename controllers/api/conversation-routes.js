@@ -46,6 +46,51 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// conversations by user
+router.get('/', async (req, res) => {
+  try {
+    const dbConversations = await Participant.findAll({
+      where: { user_id: 1 },
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Conversation,
+          attributes: ['conversation_name', 'updated_at'],
+          include: [
+            {
+              model: Message,
+              attributes: { exclude: ['created_at', 'conversation_id'] },
+              include: [
+                {
+                  model: User,
+                  attributes: ['username'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      // order by user_id decending
+      order: [
+        [{ model: Conversation }, 'updated_at', 'DESC'],
+        [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
+      ],
+    });
+
+    // res.json(conversations);
+    const conversations = dbConversations.map((conversation) =>
+      conversation.get({ plain: true })
+    );
+    console.log(conversations);
+    res.render('home', { conversations });
+  } catch (err) {
+    res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
+  }
+});
+
 // CREATE new conversation
 
 // UPDATE conversation_messages
