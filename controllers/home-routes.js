@@ -3,6 +3,10 @@ const { User, Conversation, Message, Participant } = require('../models');
 
 // returns list of all conversations matching a given id
 router.get('/', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.render('login');
+  }
+
   try {
     const dbConversations = await Participant.findAll({
       // TODO: [ ] use req.session.user_id
@@ -41,7 +45,7 @@ router.get('/', async (req, res) => {
       conversation.get({ plain: true })
     );
 
-    res.render('home', { conversations });
+    res.render('home', { conversations, loggedIn: req.session.loggedIn });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
