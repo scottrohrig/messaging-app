@@ -1,0 +1,113 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>tella</title>
+    <!--Stylesheet-->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!--Bootstrap-->
+    <link
+      rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css'
+      integrity='sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=='
+      crossorigin='anonymous'
+      referrerpolicy='no-referrer'
+    />
+    <link
+      rel='stylesheet'
+      href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'
+    />
+  </head>
+  <body>
+    <div class='container'>
+
+      <!--Header/Nav-->
+      <!--src: https://mdbootstrap.com/snippets/jquery/mdbootstrap/888407#html-tab-view (not updated for BS v5)-->
+      <header>
+        <!--Navbar-->
+        <nav class='navbar navbar-light lighten-4'>
+
+          <!-- Navbar brand -->
+          <a class='navbar-brand' href='#'>
+            <img
+              src='/icons/tella.png'
+              alt='tella'
+              style='width: 48px; height: 48px'
+            />
+            tella
+          </a>
+
+          <!-- Collapse button -->
+          <button
+            class='navbar-toggler toggler-example'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarSupportedContent1'
+            aria-controls='navbarSupportedContent1'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
+          ><span class='dark-blue-text'><i
+                class='bi bi-list fa-1x'
+              ></i></span></button>
+
+          <!-- Collapsible content -->
+          <div class='collapse navbar-collapse' id='navbarSupportedContent1'>
+
+            <!-- Links -->
+            <ul class='navbar-nav mr-auto'>
+              <li class='nav-item active'>
+                <a class='nav-link active' href='#'>Home
+                  <span class='visually-hidden-focusable'>(current)</span></a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='#'>Profile</a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link' href='#'>Settings</a>
+              </li>
+              <li class='nav-item'>
+                {{#if loggedIn}}
+                  <a class='nav-link' href='#'>logout</a>
+                {{else}}
+                  <a href='#'>login</a>
+                {{/if}}
+              </li>
+            </ul>
+
+          </div>
+
+        </nav>
+      </header>
+
+      <!--Main Content-->
+      <div class='container'>
+        {{{body}}}
+      </div>
+
+    </div>
+
+    {{#if loggedIn}}
+      <script src='/scripts/logout.js'></script>
+      <script src='/scripts/index.js'></script>
+    {{/if}}
+
+    <script
+      src='https://code.jquery.com/jquery-3.3.1.slim.min.js'
+      integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo'
+      crossorigin='anonymous'
+    ></script>
+    <script
+      src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'
+      integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1'
+      crossorigin='anonymous'
+    ></script>
+    <script
+      src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js'
+      integrity='sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=='
+      crossorigin='anonymous'
+      referrerpolicy='no-referrer'
+    ></script>
+
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<body>
+  <div class="container">
+    <div class="row">
+      <form action="/" method="post" role="form" enctype="application/x-www-form-urlencoded">
+        <h1>signup</h1>
+
+        <div id="login-error-msg-holder">
+          <p id="login-error-msg">invalid username <span id="error-msg-second-line">and/or password</span></p>
+        </div>
+
+        <div class="input-form">
+          <label for="username">username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="sample-user">
+        </div>
+
+        <div class="input-form">
+          <label for="pw">password</label>
+          <input type="password" class="form-control" id="pw" name="pw" placeholder="********">
+        </div>
+z
+        {{!-- In Case we decide to add a password reset feature
+        <div>
+          <a href="#forgot-password?">forgot password</a>
+        </div>
+        --}}
+
+        <button type="submit" class="btn btn-primary">login</button>
+
+      </form>
+    </div>
+  </div>
+</body>
