@@ -16,7 +16,7 @@ async function loginFormHandler(event) {
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard/');
+      document.location.replace('/home/');
     } else {
       // eslint-disable-next-line no-alert
       alert(response.statusText);

@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-undef */
 async function signupFormHandler(event) {
   event.preventDefault();
 
@@ -17,7 +19,7 @@ async function signupFormHandler(event) {
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard/');
+      document.location.replace('/login/');
     } else {
       alert(response.statusText);
     }
