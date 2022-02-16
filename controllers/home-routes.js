@@ -46,6 +46,12 @@ router.get('/', async (req, res) => {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
 });
+
+
+router.get('/login', async (req, res) => {
+res.render('login')
+});
+
 // TODO: [ ]: conversation/:id view
 // router.get('/conversation/:id', (req, res) => {
 //   res.render('conversation');
