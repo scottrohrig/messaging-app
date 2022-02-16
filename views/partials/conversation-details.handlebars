@@ -18,12 +18,18 @@ TODO:
 <li class='list-group-item'>
   {{!-- {{#each this}} --}}
   <div class='row'>
-    <div class='col-2 avatar'>
+
+    <div class='col-1 col-lg-2 avatar'>
       {{!-- <img src="/images/{{pfp}}"> --}}
+      <img
+        class='border rounded-circle'
+        style='height: 48px'
+        src='/images/avatar-1.png'
+      />
     </div>
 
     <div class='col-8 message-content'>
-      <div class='d-flex w-100 space-between'>
+      <div class='d-flex w-100 justify-content-between'>
         <span class='fw-bold fs-4'>{{conversation.conversation_name}}</span>
         <span>{{formatTime conversation.updated_at}}</span>
       </div>
@@ -35,7 +41,7 @@ TODO:
           }}</span>
       </p>
     </div>
-    <div class='col-1 deletebtn'>
+    <div class='col-1 deletebtn d-flex center'>
       <button type='button' class='btn btn-secondary delete-btn'><i
           class='bi bi-trash'
         ></i></button>
