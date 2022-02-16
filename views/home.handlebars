@@ -13,14 +13,15 @@ wrap around me.
          to show each 'conversation'
     [ ]: then add the conversation-details
          partial
+     [ ]: 'new conversation' button - pick contact & create new conversation
   }}
 
 <h1>testing tella</h1>
 {{! ⬆ you may delete me, I'm just making sure the page loads and shows content :D }}
 
-<section class="card">
+<section class="card h-75">
      <h2 class="card-header">conversations</h2>
-     <ol class="list-group">
+     <ol class="list-group overflow-scroll">
           {{#each conversations as |conversation|}}
           {{> conversation-details}}
           </li>

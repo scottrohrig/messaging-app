@@ -20,25 +20,32 @@ TODO:
 
   {{#each}}
   <div class='row'>
-    <div class='avatar'>
+    <div class='col-2 avatar'>
       {{!-- <img src="/images/{{pfp}}"> --}}
     </div>
 
-    <div class='message-content'>
-      <p class='title'>{{user.username}}</p>
+    <div class='col-8 message-content'>
+      <div class='d-flex w-100 space-between'>
+        <span class='fw-bold fs-4'>{{conversation.conversation_name}}</span>
+        <span>{{formatTime conversation.updated_at}}</span>
+      </div>
       <p>
-        {{conversation.conversation_name}}
-      </p>
-      <p>
-        {{#each conversation.messages}}
-          {{message_text}}
-          <span>{{updated_at}}</span>
-        {{/each}}
+        {{getLastMessage conversation.messages}}
+        -
+        <span class='title fw-bold fs-6'>{{getLastMsgUsername
+            conversation.messages
+          }}</span>
       </p>
     </div>
+<<<<<<< HEAD
     <div class='deletebtn'>
       <button type='submit' class='delete-btn'><i
           class='fa fa-trash'
+=======
+    <div class='col-1 deletebtn'>
+      <button type='button' class='btn btn-secondary delete-btn'><i
+          class='bi bi-trash'
+>>>>>>> f47a92144e959f8370befac75f6de569aef6e981
         ></i></button>
     </div>
   </div>

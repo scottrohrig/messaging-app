@@ -5,6 +5,7 @@ const { User, Conversation, Message, Participant } = require('../models');
 router.get('/', async (req, res) => {
   try {
     const dbConversations = await Participant.findAll({
+      // TODO: [ ] use req.session.user_id
       where: { user_id: 1 },
       include: [
         {
@@ -35,12 +36,11 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    // TODO: [ ] render conversations list instead of returning json
     // res.json(conversations);
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
     );
-    console.log(conversations);
+
     res.render('home', { conversations });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
@@ -48,13 +48,23 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/login', async (req, res) => {
-res.render('login')
-});
 
 // TODO: [ ]: conversation/:id view
 // router.get('/conversation/:id', (req, res) => {
 //   res.render('conversation');
 // });
+
+router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('login');
+});
+
+router.get('/signup', (req, res) => {
+  res.render('signup');
+});
 
 module.exports = router;
