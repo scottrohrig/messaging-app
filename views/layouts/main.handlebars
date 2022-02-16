@@ -25,7 +25,11 @@
       <!--Header/Nav-->
       <header>
         <!--Navbar-->
+        {{#if loggedIn}}
         <nav class='navbar navbar-light lighten-4'>
+          {{else}}
+        <nav class='navbar navbar-primary lighten-4'>
+          {{/if}}
 
           <!-- Navbar brand -->
           <a class='navbar-brand' href='#'>
@@ -67,7 +71,7 @@
               </li>
               <li class='nav-item'>
                 {{#if loggedIn}}
-                  <a class='nav-link' href='/'>logout</a>
+                  <a id='logout' class='nav-link' href='/'>logout</a>
                 {{else}}
                   <a href='/login'>login</a>
                 {{/if}}
