@@ -47,8 +47,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
 // TODO: [ ]: conversation/:id view
 // router.get('/conversation/:id', (req, res) => {
 //   res.render('conversation');

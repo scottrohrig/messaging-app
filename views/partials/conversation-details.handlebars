@@ -15,28 +15,34 @@ TODO:
     [ ]: the message content should have the: username, timestamp & message text
     [ ]: and the last column should have a div with the delete icon center-aligned
  --}}
-<li class='list-group-item'>
+<li class='list-group-item border rounded-0'>
   {{!-- {{#each this}} --}}
 
   {{#each}}
   <div class='row'>
     <div class='col-2 avatar'>
       {{!-- <img src="/images/{{pfp}}"> --}}
+      <img
+        class='border rounded-circle'
+        style='height: 48px'
+        src='/images/avatar-1.png'
+      />
     </div>
 
-    <div class='col-8 message-content'>
-      <div class='d-flex w-100 space-between'>
-        <span class='fw-bold fs-4'>{{conversation.conversation_name}}</span>
+    <div class='col-8 col-md-9 message-content'>
+      <div class='d-flex w-100 justify-content-between'>
+        <span class='fw-bold fs-6'>{{conversation.conversation_name}}</span>
         <span>{{formatTime conversation.updated_at}}</span>
       </div>
-      <p>
+      <p class='fw-light fst-italic btn bg-light'>
         {{getLastMessage conversation.messages}}
         -
-        <span class='title fw-bold fs-6'>{{getLastMsgUsername
+        <span class='title fw-bold fs-8'>{{getLastMsgUsername
             conversation.messages
           }}</span>
       </p>
     </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <div class='deletebtn'>
       <button type='submit' class='delete-btn'><i
@@ -44,6 +50,12 @@ TODO:
 =======
     <div class='col-1 deletebtn'>
       <button type='button' class='btn btn-secondary delete-btn'><i
+=======
+    <div
+      class='col-1 deletebtn d-flex align-items-center justify-content-center'
+    >
+      <button type='button' class='btn text-secondary delete-btn'><i
+>>>>>>> develop
           class='bi bi-trash'
 >>>>>>> f47a92144e959f8370befac75f6de569aef6e981
         ></i></button>
