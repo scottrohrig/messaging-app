@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
     );
-    console.log(conversations);
+
     res.render('home', { conversations });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
@@ -52,7 +52,6 @@ router.get('/', async (req, res) => {
 // });
 
 router.get('/login', (req, res) => {
-
   if (req.session.loggedIn) {
     res.redirect('/');
     return;

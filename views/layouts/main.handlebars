@@ -20,7 +20,7 @@
     />
   </head>
   <body>
-    <div class='container'>
+    <div class='container h-100'>
 
       <!--Header/Nav-->
       <header>
@@ -67,9 +67,9 @@
               </li>
               <li class='nav-item'>
                 {{#if loggedIn}}
-                  <a class='nav-link' href='#'>logout</a>
+                  <a class='nav-link' href='/'>logout</a>
                 {{else}}
-                  <a href='#'>login</a>
+                  <a href='/login'>login</a>
                 {{/if}}
               </li>
             </ul>
