@@ -29,7 +29,7 @@
             SESS_SECRET='uber secret passkey'
             DB_NAME=messages_db
             DB_USER='my-username'
-            DB_PASSWORD='my-pw1234'
+            DB_PW='my-pw1234'
 
     1. create the MySQL Database 'messages_db'
 
