@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
               include: [
                 {
                   model: User,
-                  attributes: ['username'],
+                  attributes: ['username', 'pfp_path'],
                 },
               ],
             },
@@ -60,5 +60,8 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/signup', (req, res) => {
+  res.render('signup');
+});
 
 module.exports = router;

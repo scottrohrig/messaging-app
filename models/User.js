@@ -45,6 +45,11 @@ User.init(
         len: [4],
       },
     },
+    pfp_path: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'avatar-02.png',
+    },
   },
   {
     hooks: {
