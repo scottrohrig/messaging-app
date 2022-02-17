@@ -1,6 +1,6 @@
 
-<ul class="list-group">
-  {{#each messages}}
+<ul class="list-group border-0">
+  {{#each conversation.messages as |message|}}
   {{> message-details}}
   {{/each}}
 </ul>

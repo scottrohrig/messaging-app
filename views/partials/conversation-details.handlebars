@@ -15,8 +15,9 @@ TODO:
     [ ]: the message content should have the: username, timestamp & message text
     [ ]: and the last column should have a div with the delete icon center-aligned
  --}}
-<li class='list-group-item border rounded-0'>
+<li class='list-group-item'>
   {{!-- {{#each this}} --}}
+
   <div class='row justify-content-between'>
 
     <div
@@ -32,17 +33,19 @@ TODO:
     </div>
 
     <div class='col-8 col-md-9 message-content'>
-      <div class='d-flex w-100 justify-content-between'>
-        <span class='fw-bold fs-6'>{{conversation.conversation_name}}</span>
-        <span>{{formatTime conversation.updated_at}}</span>
-      </div>
-      <p class='fw-light fst-italic btn bg-light'>
-        {{getLastMessage conversation.messages}}
-        -
-        <span class='title fw-bold fs-8'>{{getLastMsgUsername
-            conversation.messages
-          }}</span>
-      </p>
+      <a href='conversations/{{id}}' style='text-decoration: none;'>
+        <div class='d-flex w-100 justify-content-between'>
+          <span class='fw-bold fs-6'>{{conversation.conversation_name}}</span>
+          <span>{{formatTime conversation.updated_at}}</span>
+        </div>
+        <p class='fw-light fst-italic btn bg-light'>
+          {{getLastMessage conversation.messages}}
+          -
+          <span class='title fw-bold fs-8'>{{getLastMsgUsername
+              conversation.messages
+            }}</span>
+        </p>
+      </a>
     </div>
     <div
       class='col-1 deletebtn d-flex align-items-center justify-content-center'

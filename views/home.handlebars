@@ -1,12 +1,10 @@
 <section class="card h-75 rounded-3">
      <h2 class="card-header bg-light ">conversations</h2>
-     <ol class="list-group overflow-scroll h-100">
+     <ul class="list-group list-group-flush overflow-scroll h-100">
           {{#each conversations as |conversation|}}
-          <a href="conversations/{{conversation.conversation_id}}" style="text-decoration: none;">
                {{> conversation-details}}
-          </a>
           {{/each}}
-     </ol>
+     </ul>
 </section>
 <div class="d-flex mt-3 justify-content-end">
 

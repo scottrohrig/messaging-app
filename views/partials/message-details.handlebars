@@ -1,32 +1,11 @@
-{{! TODO:
-    [ ]: design the layout for the message here
-    [ ]: include  profile pic, username, timestamp & message text
-    [ ]: conditionally assign a class if the user is 'sender'
-         so that the message will format right-aligned,
-         otherwise it will be left-aligned
-}}
-
-
-{{!-- optional back button instead of nav bar (?)
-
-<div class='back-btn'>
-  <button type='button' class='back'>
-    <i class='fas fa-chevron-circle-left'></i>
-  </button>
-</div>
-
---}}
-
-<form class='message-form'>
-
-  <div>
-    <textarea name='message-body'></textarea>
+<li class='list-group-item border-0'>
+  <div class='row'>
+    <div class='col'>
+      <p>{{user.username}}</p>
+    </div>
+    <div class='col-10'>
+      <p class='bg-light px-3 py-2 rounded-3 fw-light'>
+        {{message_text}}</p>
+    </div>
   </div>
-
-  <div class='send-btn'>
-    <button type='button' class='send'>
-      <i class=''></i>
-    </button>
-  </div>
-
-</form>
+</li>
