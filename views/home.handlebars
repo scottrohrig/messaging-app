@@ -1,31 +1,15 @@
-{{!--
-I'm the 'home' view.
-Handlebars embeds me in
-the {{{body}}} tag of the
-'main' layout. So the
-header / footer will
-wrap around me.
- --}}
-
-{{! TODO:
-    [*]: add an asterisk inside when the task is complete
-    [ ]: use the handlebars built-in '#each'
-         to show each 'conversation'
-    [ ]: then add the conversation-details
-         partial
-     [ ]: 'new conversation' button - pick contact & create new conversation
-  }}
-
 <section class="card h-75 rounded-3">
      <h2 class="card-header bg-light ">conversations</h2>
      <ol class="list-group overflow-scroll h-100">
           {{#each conversations as |conversation|}}
           <a href="conversations/{{conversation.conversation_id}}" style="text-decoration: none;">
-          {{> conversation-details}}
+               {{> conversation-details}}
           </a>
           {{/each}}
      </ol>
 </section>
 <div class="d-flex mt-3 justify-content-end">
-     <button class="col col-md-3 btn btn-primary new-conversation-btn">new conversation</button>
+     <button class="col col-md-3 btn btn-primary new-conversation-btn text-white">
+          <a href="/new-conversation" class="text-white" style="text-decoration: none;">new conversation</a>
+     </button>
 </div>
