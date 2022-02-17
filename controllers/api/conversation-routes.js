@@ -112,4 +112,14 @@ router.post('/', async (req, res) => {
 
 // DELETE conversation
 
+router.delete('/:id', (req, res) => {
+  Conversation.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbconversationData)
+
+})
+
 module.exports = router;
