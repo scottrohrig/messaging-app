@@ -12,15 +12,9 @@ const handleCreateConversation = async (e) => {
     return;
   }
   console.log('Fetching email...', conversationName, recipient);
-  const emailResponse = await fetch('/api/users', {
-    method: 'post',
-    body: JSON.stringify({
-      email: recipient,
-    }),
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const emailResponse = await fetch(`/api/users/${recipient}`);
 
-  console.log('Validating email...');
+  console.log('Validating email...', emailResponse);
   if (!emailResponse.ok) {
     alert('No user with that email!');
     return;
