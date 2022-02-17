@@ -19,7 +19,9 @@ async function signupFormHandler(event) {
     });
 
     if (response.ok) {
-      document.location.replace('/home/');
+      await setTimeout(() => {
+        document.location.replace('/home/');
+      }, 100);
     } else {
       alert(response.statusText);
     }

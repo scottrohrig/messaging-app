@@ -45,12 +45,21 @@ User.init(
         len: [4],
       },
     },
+    pfp_path: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'avatar-02.png',
+    },
   },
   {
     hooks: {
       async beforeCreate(newUserData) {
         // eslint-disable-next-line no-param-reassign
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        // eslint-disable-next-line no-param-reassign
+        newUserData.pfp_path = `avatar-${
+          Math.floor(Math.random() * 21) + 1
+        }.png`;
         return newUserData;
       },
       async beforeUpdate(newUserData) {

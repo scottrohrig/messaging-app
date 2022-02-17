@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// CREATE new user
+// CREATE new user / SIGNUP
 router.post('/', async (req, res) => {
   // validate req.body has all required user fields
   if (!req.body.email || !req.body.username || !req.body.password) {
@@ -53,6 +53,7 @@ router.post('/', async (req, res) => {
     );
 
     req.session.save(() => {
+      req.session.user_id = newUser.id;
       req.session.loggedIn = true;
 
       res.status(200).json(newUser);
@@ -65,6 +66,7 @@ router.post('/', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
+  console.log(req.body);
   try {
     const user = await User.findOne({
       where: { email: req.body.email },
@@ -83,13 +85,11 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.save(() => {
+      req.session.user_id = user.id;
       req.session.loggedIn = true;
 
-      res.status(200).json({
-        user,
-        pws: [req.body.password, user.password],
-        message: 'You are now logged in',
-      });
+      console.log('\n\nLogged in...');
+      res.status(200).json({ message: 'You are now logged in' });
     });
   } catch (err) {
     console.log(err);
@@ -126,6 +126,7 @@ router.put('/', async (req, res) => {
 
     res.status(200).json({ user: updatedUser });
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err);
     res.status(500).json({ message: err });
   }
@@ -136,8 +137,8 @@ router.put('/', async (req, res) => {
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
-      id: req.params.id
-    }
+      id: req.params.id,
+    },
   })
     .then((dbUserData) => {
       if (!dbUserData) {

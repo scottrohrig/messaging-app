@@ -3,10 +3,15 @@ const { User, Conversation, Message, Participant } = require('../models');
 
 // returns list of all conversations matching a given id
 router.get('/', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.render('login');
+  }
+
   try {
     const dbConversations = await Participant.findAll({
       // TODO: [ ] use req.session.user_id
-      where: { user_id: 1 },
+      // Error:
+      where: { user_id: req.session.user_id },
       include: [
         {
           model: User,
@@ -22,7 +27,7 @@ router.get('/', async (req, res) => {
               include: [
                 {
                   model: User,
-                  attributes: ['username'],
+                  attributes: ['username', 'pfp_path'],
                 },
               ],
             },
@@ -36,20 +41,21 @@ router.get('/', async (req, res) => {
       ],
     });
 
+    console.log(req.session);
     // res.json(conversations);
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
     );
 
-    res.render('home', { conversations });
+    res.render('home', { conversations, loggedIn: req.session.loggedIn });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
 });
 // TODO: [ ]: conversation/:id view
-// router.get('/conversation/:id', (req, res) => {
-//   res.render('conversation');
-// });
+router.get('/conversation/:id', (req, res) => {
+  res.render('conversation');
+});
 
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
