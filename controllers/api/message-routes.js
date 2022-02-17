@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
 // CREATE new message
 // TODO: [ ] - Need a route to handle creating a new message when the
 // new-message textarea form is submitted. It needs to be a post
-// request and pass in the currently logged in user_id, and the current
+// request and pass in the currently logged in user_id (eg, req.session.user_id), and the current
 // conversation_id
 
 // DELETE message

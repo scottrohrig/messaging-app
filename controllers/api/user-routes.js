@@ -12,26 +12,28 @@ router.get('/', async (req, res) => {
 });
 
 // GET user by id
-router.get('/:id', (req, res) => {
-  User.findAll({
-    where: { id: req.params.id },
-    attributes: { exclude: ['password'] },
-  })
-    .then((user) => {
-      if (!user) {
-        res.status(404).json({ message: 'User not found' });
-        return;
-      }
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+// router.get('/:id', (req, res) => {
+//   User.findAll({
+//     where: { id: req.params.id },
+//     attributes: { exclude: ['password'] },
+//   })
+//     .then((user) => {
+//       if (!user) {
+//         res.status(404).json({ message: 'User not found' });
+//         return;
+//       }
+//       res.status(200).json(user);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
 
-// GET user by email
-router.post('/', async (req, res) => {
+// ISSUE: this route overwrites the CREATE new user route...c
+// FIX: change this to a get route by :email from the params (eg ?email...)
+// // GET user by email as recipient when CREATE new conversation
+router.get('/:email', async (req, res) => {
   try {
     const recipient = await User.findOne({
       where: {
