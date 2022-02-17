@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 /* eslint-disable no-undef */
 async function messageFormHandler(event) {
   event.preventDefault();
@@ -18,3 +20,4 @@ async function messageFormHandler(event) {
 document
   .getElementById('new-message')
   .addEventListener('submit', messageFormHandler);
+>>>>>>> 6f94fb0ed37dfcbfff91f4596fd97df11ad68e0e

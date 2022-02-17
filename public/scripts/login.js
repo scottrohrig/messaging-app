@@ -19,7 +19,7 @@ async function loginFormHandler(event) {
       console.log('response ok', response);
 
       await setTimeout(() => {
-        document.location.replace('/');
+        document.location.replace('/home/');
       }, 100);
     } else {
       // eslint-disable-next-line no-alert
