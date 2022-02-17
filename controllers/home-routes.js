@@ -4,13 +4,15 @@ const { User, Conversation, Message, Participant } = require('../models');
 // returns list of all conversations matching a given id
 router.get('/', async (req, res) => {
   if (!req.session.loggedIn) {
+    console.log('\n\nNot loggedIn...\n');
     res.render('login');
+    return;
   }
 
   try {
     const dbConversations = await Participant.findAll({
       // TODO: [ ] use req.session.user_id
-      // Error:
+      // Error: user_id doesn't exist yet.
       where: { user_id: req.session.user_id },
       include: [
         {
@@ -52,7 +54,7 @@ router.get('/', async (req, res) => {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
 });
-// TODO: [ ]: conversation/:id view
+
 router.get('/conversations/:id', async (req, res) => {
   const conversationData = await Conversation.findOne({
     where: { id: req.params.id },
