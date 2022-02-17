@@ -33,7 +33,10 @@ TODO:
     </div>
 
     <div class='col-8 col-md-9 message-content'>
-      <a href='conversations/{{id}}' style='text-decoration: none;'>
+      <a
+        href='conversations/{{conversation_id}}'
+        style='text-decoration: none;'
+      >
         <div class='d-flex w-100 justify-content-between'>
           <span class='fw-bold fs-6'>{{conversation.conversation_name}}</span>
           <span>{{formatTime conversation.updated_at}}</span>
