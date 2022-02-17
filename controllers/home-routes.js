@@ -53,8 +53,17 @@ router.get('/', async (req, res) => {
   }
 });
 // TODO: [ ]: conversation/:id view
-router.get('/conversation/:id', (req, res) => {
-  res.render('conversation');
+router.get('/conversations/:id', async (req, res) => {
+  const conversationData = await Conversation.findOne({
+    where: { id: req.params.id },
+    include: [{ model: Message, attributes: ['message_text'] }],
+  });
+  console.log('\n\n', conversationData);
+
+  const conversation = conversationData.get({ plain: true });
+
+  console.log('\n\n', { conversation });
+  res.render('conversation', { conversation });
 });
 
 router.get('/login', (req, res) => {
