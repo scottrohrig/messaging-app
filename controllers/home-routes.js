@@ -66,6 +66,10 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/new-conversation', (req, res) => {
+  res.render('new-conversation');
+});
+
 router.get('/signup', (req, res) => {
   res.render('signup');
 });

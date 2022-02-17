@@ -92,6 +92,14 @@ router.get('/', async (req, res) => {
 });
 
 // CREATE new conversation
+router.post('/', async (req, res) => {
+  const conversation = await Conversation.create({
+    conversation_name: req.body.conversation_name,
+  });
+
+  // TODO:  [ ] how to render this new conversation by id?
+  res.render('conversation', { conversation });
+});
 
 // UPDATE conversation_messages
 
