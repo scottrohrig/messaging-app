@@ -1,0 +1,14 @@
+
+<ul class="list-group">
+  {{#each messages}}
+  {{> message-details}}
+  {{/each}}
+</ul>
+
+<div class="form" >
+  <div class="d-flex">
+  {{!-- <label for="new-message" class="form-label"></label> --}}
+  <textarea id="new-message" rows='3' class="form-control flex" placeholder="message"></textarea>
+  <button class="btn btn-primary ms-3 ">send</button>
+  </div>
+</div>
