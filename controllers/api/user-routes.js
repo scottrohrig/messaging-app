@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// CREATE new user
+// CREATE new user / SIGNUP
 router.post('/', async (req, res) => {
   // validate req.body has all required user fields
   if (!req.body.email || !req.body.username || !req.body.password) {
@@ -53,6 +53,7 @@ router.post('/', async (req, res) => {
     );
 
     req.session.save(() => {
+      req.session.user_id = req.body.user_id;
       req.session.loggedIn = true;
 
       res.status(200).json(newUser);
@@ -122,6 +123,7 @@ router.put('/', async (req, res) => {
 
     res.status(200).json({ user: updatedUser });
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err);
     res.status(500).json({ message: err });
   }

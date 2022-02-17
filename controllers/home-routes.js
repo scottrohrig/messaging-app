@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   try {
     const dbConversations = await Participant.findAll({
       // TODO: [ ] use req.session.user_id
-      where: { user_id: 1 },
+      where: { user_id: req.session.user_id },
       include: [
         {
           model: User,
@@ -51,9 +51,9 @@ router.get('/', async (req, res) => {
   }
 });
 // TODO: [ ]: conversation/:id view
-// router.get('/conversation/:id', (req, res) => {
-//   res.render('conversation');
-// });
+router.get('/conversation/:id', (req, res) => {
+  res.render('conversation');
+});
 
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
