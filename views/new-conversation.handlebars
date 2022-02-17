@@ -2,21 +2,28 @@
   <h3 class='card-header'> Create New Conversation </h3>
   <form class='card-body new-conversation-form' id='new-conversation-form'>
     <div>
-      <label for='conversation-title' class='form-label'> Title </label>
+      <label for='conversation-title' class='form-label'> Title: </label>
       <input
         type='text'
         id='conversation-title'
         name='conversation-title'
-        class='form-input'
+        class='form-control'
       />
     </div>
     <div>
-      <label for='email-recipient'>email:</label>
-      <input type='text' id='email-recipient' />
+      <label for='email-recipient' class='form-label'>Recipient Email:</label>
+      <input
+        type='text'
+        id='email-recipient'
+        class='form-control'
+        placeholder='example@email.com'
+      />
     </div>
-
-    <button type='submit' class='btn'> Create </button>
-
+    <div class='d-flex mt-3 justify-content-end'>
+      <button type='submit' class='col col-md-3 btn btn-primary mt-3'>
+        Create
+      </button>
+    </div>
     {{!
         <label class="form-label" for="content"> Message Content </label>
         <input id="content" name="content" class="form-input" />
@@ -25,4 +32,4 @@
   </form>
 </div>
 
-<script src='/javascript/add-conversation.js'></script>
+<script src='/scripts/add-conversation.js'></script>
