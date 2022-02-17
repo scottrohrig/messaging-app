@@ -35,24 +35,11 @@ router.get('/:id', async (req, res) => {
 // GET message by id
 
 // CREATE new message
+// TODO: [ ] - Need a route to handle creating a new message when the
+// new-message textarea form is submitted. It needs to be a post
+// request and pass in the currently logged in user_id, and the current
+// conversation_id
 
 // DELETE message
-
-// GET all conversations for a specific user
-// ********************************
-// SELECT
-//     conversation_id
-// FROM participants
-// WHERE user_id = 4;
-
-// for each conversation_id
-// GET all messages matching conversation_id
-// ********************************
-// SELECT
-//     msg.message_text,
-//     user.username
-// FROM message AS msg
-// LEFT JOIN user ON msg.sender_id = user.id
-// WHERE conversation_id = 2;
 
 module.exports = router;
