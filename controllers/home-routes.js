@@ -56,7 +56,13 @@ router.get('/', async (req, res) => {
 router.get('/conversations/:id', async (req, res) => {
   const conversationData = await Conversation.findOne({
     where: { id: req.params.id },
-    include: [{ model: Message, attributes: ['message_text'] }],
+    include: [
+      {
+        model: Message,
+        attributes: ['message_text', 'created_at'],
+        include: [User],
+      },
+    ],
   });
   console.log('\n\n', conversationData);
 
