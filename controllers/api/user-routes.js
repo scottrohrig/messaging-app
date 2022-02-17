@@ -85,11 +85,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
 
-      res.status(200).json({
-        user,
-        pws: [req.body.password, user.password],
-        message: 'You are now logged in',
-      });
+      res.status(200).json({ message: 'You are now logged in' });
     });
   } catch (err) {
     console.log(err);
@@ -136,8 +132,8 @@ router.put('/', async (req, res) => {
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
-      id: req.params.id
-    }
+      id: req.params.id,
+    },
   })
     .then((dbUserData) => {
       if (!dbUserData) {

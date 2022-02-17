@@ -16,15 +16,16 @@ wrap around me.
      [ ]: 'new conversation' button - pick contact & create new conversation
   }}
 
-<h1>testing tella</h1>
-{{! ⬆ you may delete me, I'm just making sure the page loads and shows content :D }}
-
-<section class="card">
-     <h2 class="card-header">conversations</h2>
-     <ol class="list-group">
+<section class="card h-75 rounded-3">
+     <h2 class="card-header bg-light ">conversations</h2>
+     <ol class="list-group overflow-scroll h-100">
           {{#each conversations as |conversation|}}
+          <a href="conversations/{{conversation.conversation_id}}">
           {{> conversation-details}}
-          </li>
+          </a>
           {{/each}}
      </ol>
 </section>
+<div class="d-flex mt-3 justify-content-end">
+     <button class="col col-md-3 btn btn-primary new-conversation-btn">new conversation</button>
+</div>

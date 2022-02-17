@@ -3,6 +3,10 @@ const { User, Conversation, Message, Participant } = require('../models');
 
 // returns list of all conversations matching a given id
 router.get('/', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.render('login');
+  }
+
   try {
     const dbConversations = await Participant.findAll({
       // TODO: [ ] use req.session.user_id
@@ -22,7 +26,7 @@ router.get('/', async (req, res) => {
               include: [
                 {
                   model: User,
-                  attributes: ['username'],
+                  attributes: ['username', 'pfp_path'],
                 },
               ],
             },
@@ -40,8 +44,8 @@ router.get('/', async (req, res) => {
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
     );
-    console.log(conversations);
-    res.render('home', { conversations });
+
+    res.render('home', { conversations, loggedIn: req.session.loggedIn });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
@@ -52,7 +56,6 @@ router.get('/', async (req, res) => {
 // });
 
 router.get('/login', (req, res) => {
-
   if (req.session.loggedIn) {
     res.redirect('/');
     return;
@@ -62,8 +65,6 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-
-  
   res.render('signup');
 });
 
