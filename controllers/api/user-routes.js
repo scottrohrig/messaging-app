@@ -30,21 +30,22 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// GET user by email
-router.post('/', async (req, res) => {
-  try {
-    const recipient = await User.findOne({
-      where: {
-        email: req.body.email,
-        attributes: { include: ['email', 'id'] },
-      },
-    });
+// ISSUE: this route overwrites the CREATE new user route...
+// // GET user by email as recipient when CREATE new conversation
+// router.post('/', async (req, res) => {
+//   try {
+//     const recipient = await User.findOne({
+//       where: {
+//         email: req.body.email,
+//         attributes: { include: ['email', 'id'] },
+//       },
+//     });
 
-    res.status(200).json(recipient);
-  } catch (err) {
-    res.json(err);
-  }
-});
+//     res.status(200).json(recipient);
+//   } catch (err) {
+//     res.json(err);
+//   }
+// });
 
 // CREATE new user / SIGNUP
 router.post('/', async (req, res) => {
