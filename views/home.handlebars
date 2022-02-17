@@ -20,7 +20,7 @@ wrap around me.
      <h2 class="card-header bg-light ">conversations</h2>
      <ol class="list-group overflow-scroll h-100">
           {{#each conversations as |conversation|}}
-          <a href="conversations/{{conversation.conversation_id}}">
+          <a href="conversations/{{conversation.conversation_id}}" style="text-decoration: none;">
           {{> conversation-details}}
           </a>
           {{/each}}
