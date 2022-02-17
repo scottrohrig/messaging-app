@@ -1,7 +1,12 @@
 <form class='login-form'>
   <div>
     <label for='email-login' class='form-label'>email:</label>
-    <input type='text' id='email-login' class='form-control' />
+    <input
+      type='text'
+      id='email-login'
+      class='form-control'
+      placeholder='example@email.com'
+    />
   </div>
   <div>
     <label for='password-login' class='form-label'>password:</label>
@@ -10,8 +15,11 @@
   <div class='text-end'>
     <a href='/signup' class='fw-light btn text-primary'>register / sign-up</a>
   </div>
-  <div>
-    <button type='submit' class='btn btn-primary w-100 mt-3'>login</button>
+  <div class='d-flex mt-3 justify-content-end'>
+    <button
+      type='submit'
+      class='col col-md-3 btn btn-primary mt-3'
+    >login</button>
   </div>
 </form>
 
