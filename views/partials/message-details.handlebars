@@ -7,16 +7,6 @@
 }}
 
 
-{{!-- optional back button instead of nav bar (?)
-
-<div class='back-btn'>
-  <button type='button' class='back'>
-    <i class='fas fa-chevron-circle-left'></i>
-  </button>
-</div>
-
---}}
-
 <form class='message-form'>
 <input type="text" class="sender" placeholder="tella">
     <button type='submit' class='send'>
@@ -24,11 +14,20 @@
     </button>
 </form>
 
-<div class="sender">
-{{message}}
+<div class="msg-right">
+  {{!-- <img src="avatar"> --}}
+  {{!-- display=username --}}
+  {{!-- timestamp --}}
+  {{message}}
 </div>
 
 
+<div class="msg-left">
+   {{!-- <img src="avatar"> --}}
+  {{!-- display=username --}}
+  {{!-- timestamp --}}
+{{message}}
+</div>
 
 
 <script src="/public/scripts/message.js"></script>
