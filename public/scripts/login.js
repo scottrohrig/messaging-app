@@ -16,7 +16,11 @@ async function loginFormHandler(event) {
     });
 
     if (response.ok) {
-      document.location.replace('/');
+      console.log('response ok', response);
+
+      await setTimeout(() => {
+        document.location.replace('/');
+      }, 100);
     } else {
       // eslint-disable-next-line no-alert
       alert(response.statusText);

@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
   try {
     const dbConversations = await Participant.findAll({
       // TODO: [ ] use req.session.user_id
+      // Error:
       where: { user_id: req.session.user_id },
       include: [
         {
@@ -40,6 +41,7 @@ router.get('/', async (req, res) => {
       ],
     });
 
+    console.log(req.session);
     // res.json(conversations);
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
