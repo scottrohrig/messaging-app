@@ -6,7 +6,6 @@ router.get('/', async (req, res) => {
   User.findAll({})
     .then((users) => res.status(200).json(users))
     .catch((err) => {
-      console.error(err);
       res.status(500).json(err);
     });
 });
@@ -25,7 +24,6 @@ router.get('/:id', (req, res) => {
       res.status(200).json(user);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json(err);
     });
 });
@@ -58,7 +56,6 @@ router.post('/', async (req, res) => {
       res.status(200).json(newUser);
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -92,7 +89,6 @@ router.post('/login', async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -126,7 +122,6 @@ router.put('/', async (req, res) => {
 
     res.status(200).json({ user: updatedUser });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: err });
   }
 });
@@ -147,7 +142,6 @@ router.delete('/:id', (req, res) => {
       res.json(dbUserData);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json(err);
     });
 });
