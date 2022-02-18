@@ -23,7 +23,7 @@ TODO:
     <div
       class='col-1 avatar d-flex align-items-center justify-content-center mx-2'
     >
-    
+
       <img
         class='border rounded-circle'
         style='height: 48px'
@@ -52,9 +52,11 @@ TODO:
     <div
       class='col-1 deletebtn d-flex align-items-center justify-content-center'
     >
-      <button type='button' class='btn text-secondary delete-btn'><i
-          class='bi bi-trash'
-        ></i></button>
+      <button
+        type='button'
+        class='btn text-secondary delete-btn'
+        data-cid='{{conversation_id}}'
+      ><i class='bi bi-trash'></i></button>
     </div>
   </div>
   {{!-- {{/each}} --}}

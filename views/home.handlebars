@@ -1,6 +1,6 @@
 <section class="card h-75 rounded-3">
      <h2 class="card-header bg-light ">conversations</h2>
-     <ul class="list-group list-group-flush overflow-scroll h-100">
+     <ul class="list-group list-group-flush overflow-scroll h-100" id="conversation-list">
           {{#each conversations as |conversation|}}
                {{> conversation-details}}
           {{/each}}
