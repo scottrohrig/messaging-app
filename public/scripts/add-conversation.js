@@ -32,7 +32,9 @@ const handleCreateConversation = async (e) => {
     if (!conversationResponse.ok) {
       console.log(conversationResponse.json());
       alert(conversationResponse.statusText);
+      return;
     }
+    document.location.replace('/');
   });
 };
 
