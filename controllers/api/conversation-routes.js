@@ -108,6 +108,8 @@ router.post('/', async (req, res) => {
 
 // UPDATE conversation_messages
 
+
+
 // * UPDATE conversation_participants
 
 // DELETE conversation
@@ -115,11 +117,20 @@ router.post('/', async (req, res) => {
 router.delete('/:id', (req, res) => {
   Conversation.destroy({
     where: {
-      id: req.params.id
-    }
+      id: req.params.id,
+    },
   })
-  .then(dbconversationData)
-
-})
+    .then((dbconversationData) => {
+      if (!dbconversationData) {
+        res.status(404).json({ message: 'No conversation found with this id' });
+        return;
+      }
+      res.json(dbconversationData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 module.exports = router;
