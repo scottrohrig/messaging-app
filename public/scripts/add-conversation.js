@@ -34,6 +34,7 @@ const handleCreateConversation = async (e) => {
       alert(conversationResponse.statusText);
       return;
     }
+    // TODO: need to connect the recipient to the participant table with the same conversation
     document.location.replace('/');
   });
 };
