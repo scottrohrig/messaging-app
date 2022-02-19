@@ -108,8 +108,6 @@ router.post('/', async (req, res) => {
 
 // UPDATE conversation_messages
 
-
-
 // * UPDATE conversation_participants
 
 // DELETE conversation
@@ -120,12 +118,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id,
     },
   })
-    .then((dbconversationData) => {
-      if (!dbconversationData) {
+    .then((dbConversationData) => {
+      if (!dbConversationData) {
         res.status(404).json({ message: 'No conversation found with this id' });
         return;
       }
-      res.json(dbconversationData);
+      res.json(dbConversationData);
     })
     .catch((err) => {
       console.log(err);

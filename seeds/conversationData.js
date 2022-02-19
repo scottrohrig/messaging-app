@@ -14,4 +14,3 @@ const conversationData = [
 const seedConversations = () => Conversation.bulkCreate(conversationData);
 
 module.exports = seedConversations;
- 
