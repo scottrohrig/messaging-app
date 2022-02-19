@@ -92,7 +92,7 @@ router.get('/', async (req, res) => {
 });
 
 // CREATE new conversation
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   const conversation = await Conversation.create({
     conversation_name: req.body.conversation_name,
   });

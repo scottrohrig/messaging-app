@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // GET message by id
-router.get('/:id', async(req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const message = await Message.findOne({
       where: { id: req.params.id },
@@ -64,7 +64,7 @@ router.get('/:id', async(req, res) => {
 // request and pass in the currently logged in user_id (eg, req.session.user_id), and the current
 // conversation_id
 
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   Message.create({
     message_text: req.body.message_text,
     user_id: req.session.user_id,
@@ -78,7 +78,7 @@ router.post('/', (req, res) => {
 });
 
 // DELETE message
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
   Message.destroy({
     where: {
       id: req.params.id,
