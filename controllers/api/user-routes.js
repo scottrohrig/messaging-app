@@ -4,7 +4,9 @@ const { User, Message } = require('../../models');
 // GET ROUTES
 // GET all users
 router.get('/', async (req, res) => {
-  User.findAll({})
+  User.findAll({
+    attributes: { exclude: ['password'] },
+  })
     .then((users) => res.status(200).json(users))
     .catch((err) => {
       console.error(err);
@@ -18,6 +20,7 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id,
     },
+    attributes: { exclude: ['password'] },
     include: [
       {
         model: Message,
@@ -41,7 +44,7 @@ router.get('/:id', (req, res) => {
 // ISSUE: this route overwrites the CREATE new user route...c
 // FIX: change this to a get route by :email from the params (eg ?email...)
 // // GET user by email as recipient when CREATE new conversation
-router.get('/:email', async (req, res) => {
+/* router.get('/:email', async (req, res) => {
   try {
     const recipient = await User.findOne({
       where: {
@@ -55,73 +58,61 @@ router.get('/:email', async (req, res) => {
     res.json(err);
   }
 });
+*/
 
 // POST ROUTES
 // CREATE new user on signup
-router.post('/signup', async (req, res) => {
-  //validate req.body has all required user fields
-//  if (!req.body.email || !req.body.username || !req.body.password) {
-//    res.status(404).json({ message: 'User missing required fields' });
-//    return;
-//  }
-
-  try {
-    const { email, username, password } = req.body;
-
-    const newUser = await User.create(
-      {
-        email,
-        username,
-        password,
-      },
-      {
-        returning: true,
-      }
-    );
-
-    req.session.save(() => {
-      req.session.user_id = newUser.id;
-      req.session.loggedIn = true;
-
-      res.status(200).json(newUser),
+router.post('/', async (req, res) => {
+  // validate req.body has all required user fields
+  User.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  })
+    .then((user) => {
+      req.session.save(() => {
+        req.session.user_id = user.id;
+        req.session.username = user.username;
+        req.session.loggedIn = true;
+        res.json({ user, message: 'Your are logged in' });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-    }
 });
 
 // Login
 router.post('/login', async (req, res) => {
-  console.log(req.body);
-  try {
-    const { email, password } = req.body;
+  User.findOne({
+    where: {
+      email: req.body.email,
+    },
+  })
+    .then((user) => {
+      if (!user) {
+        res.status(400).json({ message: 'User not found' });
+        return;
+      }
+      const matchPw = user.checkPassword(req.body.password);
+      if (!matchPw) {
+        res.status(400).json({ message: 'Password is not valid' });
+        return;
+      }
+      req.session.save(() => {
+        req.session.username = user.username;
+        req.session.email = user.email;
+        req.session.loggedIn = true;
 
-    let user = await User.findOne({ email });
-
-    if (!user) return res.status(400).json({ message: 'No user found' });
-
-    const matchPw = await bcrypt.compare(password, user.password);
-
-    if (!matchPw) return res.status(400).json({ message: `Password is not Valid.` });
-
-    req.session.save(() => {
-      req.session.user_id = user.id;
-      req.session.email = user.email;
-      req.session.loggedIn = true;
-
-      console.log('\n\nLogged in...');
-      res.status(200).json({ message: 'You are now logged in' });
+        console.log('\n\nLogged in...');
+        res.status(200).json({ message: 'You are now logged in' });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
     });
-
-    user.password = undefined;
-
-    res.send(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Something went wtong');
-  }
 });
 
 // Logout
@@ -136,27 +127,24 @@ router.post('/logout', (req, res) => {
 });
 
 // UPDATE password
-router.put('/', async (req, res) => {
-  // TODO:
-  // [ ]: validate session, get user_id from session
-  // [ ]:  respond with 400 status "you must be logged in to change your password"
-  try {
-    const updatedUser = await User.update(req.body, {
-      individualHooks: true,
-      where: { email: req.body.email },
+router.put('/:id', async (req, res) => {
+  User.update(req.body, {
+    individualHooks: true,
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json(err);
     });
-
-    if (!updatedUser) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
-
-    res.status(200).json({ user: updatedUser });
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    res.status(500).json({ message: err });
-  }
 });
 
 // DELETE user
@@ -167,12 +155,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id,
     },
   })
-    .then((dbUserData) => {
-      if (!dbUserData) {
+    .then((user) => {
+      if (!user) {
         res.status(404).json({ message: 'No user found with this id' });
         return;
       }
-      res.json(dbUserData);
+      res.json(user);
     })
     .catch((err) => {
       console.log(err);
