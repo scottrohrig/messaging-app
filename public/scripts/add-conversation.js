@@ -14,29 +14,33 @@ const handleCreateConversation = async (e) => {
   console.log('Fetching email...', conversationName, recipient);
   const emailResponse = await fetch(`/api/users/${recipient}`);
 
-  console.log('Validating email...', emailResponse);
+  console.log('Validating email...');
   if (!emailResponse.ok) {
     alert('No user with that email!');
     return;
   }
 
   console.log('Fetching Conversation...');
-  fetch('/api/conversations', {
+  fetch('/api/conversations/create', {
     method: 'post',
     body: JSON.stringify({
       conversation_name: conversationName,
+      email: recipient,
     }),
     headers: { 'Content-Type': 'application/json' },
-  }).then((conversationResponse) => {
-    console.log('Validating Conversation...');
-    if (!conversationResponse.ok) {
-      console.log(conversationResponse.json());
-      alert(conversationResponse.statusText);
-      return;
-    }
-    // TODO: need to connect the recipient to the participant table with the same conversation
-    document.location.replace('/');
-  });
+  })
+    .then((conversationResponse) => {
+      console.log('Validating Conversation...');
+      if (!conversationResponse.ok) {
+        console.log(conversationResponse.json());
+        alert(conversationResponse.statusText);
+        return;
+      }
+      return conversationResponse.json();
+    })
+    .then(({ conversation }) =>
+      document.location.replace(`/conversations/${conversation.id}`)
+    );
 };
 
 document
