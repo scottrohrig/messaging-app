@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Conversation, Message, Participant } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // GET all conversations
 router.get('/', (req, res) => {
@@ -92,7 +93,7 @@ router.get('/', async (req, res) => {
 });
 
 // CREATE new conversation
-router.post('/', withAuth, async (req, res) => {
+router.post('/create', withAuth, async (req, res) => {
   const conversation = await Conversation.create({
     conversation_name: req.body.conversation_name,
   });
@@ -103,10 +104,25 @@ router.post('/', withAuth, async (req, res) => {
   });
 
   // TODO:  [ ] how to render this new conversation by id?
-  res.render('conversation', { conversation });
+  res.json({ conversation });
+  // res.render('conversation', { conversation });
 });
 
 // UPDATE conversation_messages
+router.put('/add-participant', async (req, res) => {
+  // get user_id from email
+  const { id } = await User.findOne({
+    where: { email: req.body.email },
+    attributes: ['id'],
+  });
+
+  if (user_id) {
+    Conversation.addParticipant({ ...req.body, user_id: id }, { Participant })
+      .then((updatedConversationData) => res.json(updatedConversationData))
+      .catch((err) => res.jwon(err));
+  }
+  res.json({ message: 'Not correct', user_id });
+});
 
 // * UPDATE conversation_participants
 
