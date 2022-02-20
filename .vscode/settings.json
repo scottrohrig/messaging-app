@@ -19,7 +19,10 @@
   "editor.minimap.renderCharacters": false,
   "editor.parameterHints.enabled": false,
   "javascript.inlayHints.parameterNames.enabled": "all",
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
   "editor.rulers": [78],
+  "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
