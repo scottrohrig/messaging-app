@@ -60,12 +60,12 @@ router.get('/:email', async (req, res) => {
 // CREATE new user on signup
 router.post('/signup', async (req, res) => {
   //validate req.body has all required user fields
-  if (!req.body.email || !req.body.username || !req.body.password) {
-    res.status(404).json({ message: 'User missing required fields' });
-    return;
-  }
+//  if (!req.body.email || !req.body.username || !req.body.password) {
+//    res.status(404).json({ message: 'User missing required fields' });
+//    return;
+//  }
 
-  try{
+  try {
     const { email, username, password } = req.body;
 
     const newUser = await User.create(
@@ -83,14 +83,13 @@ router.post('/signup', async (req, res) => {
       req.session.user_id = newUser.id;
       req.session.loggedIn = true;
 
-      res.status(200).json(newUser);
-    })
-
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+      res.status(200).json(newUser),
     });
-  }
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+    }
 });
 
 // Login
