@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Message } = require('../../models');
 
+// GET ROUTES
 // GET all users
 router.get('/', async (req, res) => {
   User.findAll({})
@@ -11,24 +12,31 @@ router.get('/', async (req, res) => {
     });
 });
 
-// GET user by id
-// router.get('/:id', (req, res) => {
-//   User.findAll({
-//     where: { id: req.params.id },
-//     attributes: { exclude: ['password'] },
-//   })
-//     .then((user) => {
-//       if (!user) {
-//         res.status(404).json({ message: 'User not found' });
-//         return;
-//       }
-//       res.status(200).json(user);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-// });
+// GET one user by id
+router.get('/:id', (req, res) => {
+  User.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      {
+        model: Message,
+        attributes: { exclude: ['password'] },
+      },
+    ],
+  })
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.json(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 // ISSUE: this route overwrites the CREATE new user route...c
 // FIX: change this to a get route by :email from the params (eg ?email...)
@@ -48,15 +56,16 @@ router.get('/:email', async (req, res) => {
   }
 });
 
-// CREATE new user / SIGNUP
-router.post('/', async (req, res) => {
-  // validate req.body has all required user fields
+// POST ROUTES
+// CREATE new user on signup
+router.post('/signup', async (req, res) => {
+  //validate req.body has all required user fields
   if (!req.body.email || !req.body.username || !req.body.password) {
     res.status(404).json({ message: 'User missing required fields' });
     return;
   }
 
-  try {
+  try{
     const { email, username, password } = req.body;
 
     const newUser = await User.create(
@@ -75,10 +84,12 @@ router.post('/', async (req, res) => {
       req.session.loggedIn = true;
 
       res.status(200).json(newUser);
+    })
+
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
   }
 });
 
@@ -86,32 +97,31 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
   console.log(req.body);
   try {
-    const user = await User.findOne({
-      where: { email: req.body.email },
-    });
+    const { email, password } = req.body;
 
-    if (!user) {
-      res.status(400).json({ message: 'No user found' });
-      return;
-    }
+    let user = await User.findOne({ email });
 
-    const match = await user.checkPassword(req.body.password);
+    if (!user) return res.status(400).json({ message: 'No user found' });
 
-    if (!match) {
-      res.status(400).json({ message: `Password Valid: ${match}` });
-      return;
-    }
+    const matchPw = await bcrypt.compare(password, user.password);
+
+    if (!matchPw) return res.status(400).json({ message: `Password is not Valid.` });
 
     req.session.save(() => {
       req.session.user_id = user.id;
+      req.session.email = user.email;
       req.session.loggedIn = true;
 
       console.log('\n\nLogged in...');
       res.status(200).json({ message: 'You are now logged in' });
     });
+
+    user.password = undefined;
+
+    res.send(user);
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(500).send('Something went wtong');
   }
 });
 
