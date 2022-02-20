@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { User, Conversation, Message, Participant } = require('../../models');
-const { sequelize } = require('../../models/User');
+const withAuth = require('../../utils/auth');
 
 // GET all message
 router.get('/', async (req, res) => {
