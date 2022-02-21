@@ -27,7 +27,7 @@
     1. add your credentials to the `.env` file
 
             SESS_SECRET='uber secret passkey'
-            DB_NAME=messages_db
+            DB_NAME='messages_db'
             DB_USER='my-username'
             DB_PW='my-pw1234'
 
