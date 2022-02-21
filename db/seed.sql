@@ -7,20 +7,20 @@ DROP TABLE IF EXISTS conversation;
 DROP TABLE IF EXISTS message;
 
 CREATE TABLE user (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(30) NOT NULL,
     password VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE conversation (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    conversation_name VARCHAR(50) DEFAULT 'conversation',
+    conversation_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    conversationname VARCHAR(50) DEFAULT 'conversation',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE message (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    message_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     message_text VARCHAR(250),
     sender_id INTEGER,
     conversation_id INTEGER,
@@ -44,7 +44,7 @@ VALUES
     ('Disneyland!');
 
 CREATE TABLE participants (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    participants_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     user_id INTEGER NOT NULL,
     conversation_id INTEGER not NULL,
     FOREIGN KEY (user_id) REFERENCES user(id),
