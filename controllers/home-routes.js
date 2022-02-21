@@ -4,7 +4,6 @@ const { User, Conversation, Message, Participant } = require('../models');
 // returns list of all conversations matching a given id
 router.get('/', async (req, res) => {
   if (!req.session.loggedIn) {
-    console.log('\n\nNot loggedIn...\n');
     res.render('login');
     return;
   }
@@ -45,11 +44,11 @@ router.get('/', async (req, res) => {
 
     console.log(req.session);
     // res.json(conversations);
-    const conversations = dbConversations.map((conversation) =>
+    const conversation = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
     );
 
-    res.render('home', { conversations, loggedIn: req.session.loggedIn });
+    res.render('home', { conversation, loggedIn: req.session.loggedIn });
   } catch (err) {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
