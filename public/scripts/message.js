@@ -3,18 +3,44 @@ async function messageFormHandler(event) {
   event.preventDefault();
 
   const msgText = document.getElementById('new-message').value.trim();
+  const id = event.relatedTarget.getAttribute('data-cid');
 
   const message = await fetch('/api/messages', {
     method: 'post',
     body: {
       message_text: msgText,
-      // TODO: [ ] - include logged in user_id
-      // TODO: [ ] - include current conversation_id (from url, eg, '.../conversation/1')
+      conversation_id: id,
     },
     headers: { 'Content-Type': 'application/json' },
   });
+  console.log('message', message);
+
+  if (message.ok) {
+    document.location.reload();
+  }
 }
 
 document
-  .getElementById('new-message')
+  .getElementById('message-form')
   .addEventListener('submit', messageFormHandler);
+
+const addPeopleModal = document.getElementById('addPeopleModal');
+addPeopleModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  const button = event.relatedTarget;
+  // Extract info from data-bs-* attributes
+  const id = button.getAttribute('data-bs-cid');
+
+  const recipient = addPeopleModal
+    .querySelector('#add-person-email')
+    .value.trim();
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  const modalTitle = addPeopleModal.querySelector('.modal-title');
+  const modalBodyInput = addPeopleModal.querySelector('.modal-body input');
+
+  modalTitle.textContent = `New message to ${recipient}`;
+  modalBodyInput.value = recipient;
+});
