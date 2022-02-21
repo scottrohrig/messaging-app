@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Conversation, Message, Participant } = require('../../models');
+const { User, Conversation, Message } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // GET all conversations
@@ -24,29 +24,36 @@ router.get('/', (req, res) => {
 
 // GET conversation by id
 router.get('/:id', async (req, res) => {
-  try {
-    const conversation = await Conversation.findOne({
-      where: { id: req.params.id },
-      include: [
-        {
-          model: Message,
-          attributes: ['message_text', 'created_at'],
-          include: [
-            {
-              model: User,
-              attributes: ['username'],
-            },
-          ],
+  Conversation.findOne({
+    where: {
+      id: req.params.id,
+    },
+    attributes: ['conversation', 'created_at'],
+    include: [
+      {
+        model: Message,
+        attributes: ['message_text', 'created_at'],
+        include: {
+          model: User,
+          attributes: ['username'],
         },
-      ],
+      },
+    ],
+  })
+    .then((conversation) => {
+      if (!conversation) {
+        res.status(404).json({ message: 'no conversation found' });
+        return;
+      }
+      res.json(Conversation);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
-
-    res.json(conversation);
-  } catch (err) {
-    res.json(err);
-  }
 });
 
+/*
 // conversations by user
 router.get('/', async (req, res) => {
   try {
@@ -91,9 +98,19 @@ router.get('/', async (req, res) => {
     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
   }
 });
+*/
 
 // CREATE new conversation
-router.post('/create', withAuth, async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
+  Conversation.create({ conversation_name: req.body.conversation_name })
+    .then((conversation) => res.json(conversation))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+/*
+
   const conversation = await Conversation.create({
     conversation_name: req.body.conversation_name,
   });
@@ -107,9 +124,29 @@ router.post('/create', withAuth, async (req, res) => {
   res.json({ conversation });
   // res.render('conversation', { conversation });
 });
+*/
 
 // UPDATE conversation_messages
-router.put('/add-participant', async (req, res) => {
+router.put('/', async (req, res) => {
+  Conversation.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((conversation) => {
+      if (!conversation[0]) {
+        res.status(404).json({ message: 'No Conversation Found' });
+        return;
+      }
+      res.json(conversation);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+/*
   // get user_id from email
   const { id } = await User.findOne({
     where: { email: req.body.email },
@@ -124,6 +161,7 @@ router.put('/add-participant', async (req, res) => {
   res.json({ message: 'Not correct', user_id });
 });
 
+*/
 // * UPDATE conversation_participants
 
 // DELETE conversation
@@ -134,12 +172,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id,
     },
   })
-    .then((dbConversationData) => {
-      if (!dbConversationData) {
+    .then((conversation) => {
+      if (!conversation) {
         res.status(404).json({ message: 'No conversation found with this id' });
         return;
       }
-      res.json(dbConversationData);
+      res.json(conversation);
     })
     .catch((err) => {
       console.log(err);
