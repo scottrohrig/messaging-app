@@ -31,7 +31,7 @@ UC Berkeley Extension Coding Bootcamp - Module 14: Model-View-Controller (MVC)
 * [x] [Tri Nguyen](https://github.com/tringuyen1086)
 * [x] [Mariko Kaku](https://github.com/marikokaku)
 * [x] [Darrell Markham](https://github.com/DarrellMarkham)
-* [x] Jeffery Jing
+* [x] [Jeffery Jing](https://github.com/JeffreyJing)
 
 ### _User Story_
 ```
