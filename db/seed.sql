@@ -15,7 +15,7 @@ CREATE TABLE user (
 
 CREATE TABLE conversation (
     conversation_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    conversationname VARCHAR(50) DEFAULT 'conversation',
+    conversation_name VARCHAR(50) DEFAULT 'conversation',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 

@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
       },
     ],
   })
-    .then((conversations) => res.json(conversations))
+    .then((conversation) => res.json(conversation))
     .catch((err) => console.error(err));
 });
 

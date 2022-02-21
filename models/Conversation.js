@@ -3,8 +3,10 @@ const { Model, DataTypes } = require('sequelize');
 // require sequelize from connection.js
 const sequelize = require('../config/connection');
 // define the Conversation class that extends Model
-class Conversation extends Model {
-  static addParticipant(body, models) {
+class Conversation extends Model {}
+
+/*
+static addParticipant(body, models) {
     // make a
     return models.Participant.create({
       user_id: body.user_id,
@@ -17,10 +19,12 @@ class Conversation extends Model {
     });
   }
 }
+*/
+
 // initialize the Conversation columns and options
 Conversation.init(
   {
-    id: {
+    conversation_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
