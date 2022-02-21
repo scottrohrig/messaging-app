@@ -1,9 +1,16 @@
 const router = require('express').Router();
-const { User, Conversation, Message, Participant } = require('../../models');
+const { Message } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// GET all message
+// GET all messages
 router.get('/', async (req, res) => {
+  Message.findAll()
+    .then((messages) => res.json(messages))
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+/*
   try {
     const messages = await Message.findAll({});
 
@@ -12,6 +19,7 @@ router.get('/', async (req, res) => {
     res.json(err);
   }
 });
+
 
 // GET all messages by conversation_id
 router.get('/:id', async (req, res) => {
@@ -57,7 +65,7 @@ router.get('/:id', async (req, res) => {
     res.json(err);
   }
 });
-
+*/
 // CREATE new message
 // TODO: [ ] - Need a route to handle creating a new message when the
 // new-message textarea form is submitted. It needs to be a post
@@ -67,13 +75,13 @@ router.get('/:id', async (req, res) => {
 router.post('/', withAuth, (req, res) => {
   Message.create({
     message_text: req.body.message_text,
-    user_id: req.session.user_id,
+    user_id: req.body.user_id,
     conversation_id: req.body.conversation_id,
   })
     .then((dbMessageData) => res.json(dbMessageData))
     .catch((err) => {
       console.log(err);
-      res.status(500).json(err);
+      res.status(400).json(err);
     });
 });
 
