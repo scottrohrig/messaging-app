@@ -12,39 +12,37 @@ router.get('/', async (req, res) => {
 });
 
 // GET user by id
-// router.get('/:id', (req, res) => {
-//   User.findAll({
-//     where: { id: req.params.id },
-//     attributes: { exclude: ['password'] },
-//   })
-//     .then((user) => {
-//       if (!user) {
-//         res.status(404).json({ message: 'User not found' });
-//         return;
-//       }
-//       res.status(200).json(user);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-// });
-
-// ISSUE: this route overwrites the CREATE new user route...c
-// FIX: change this to a get route by :email from the params (eg ?email...)
-// // GET user by email as recipient when CREATE new conversation
-router.get('/:email', async (req, res) => {
-  try {
-    const recipient = await User.findOne({
-      where: {
-        email: req.body.email,
-        attributes: { include: ['email', 'id'] },
-      },
+router.get('/:id', (req, res) => {
+  User.findOne({
+    where: { id: req.params.id },
+    attributes: { exclude: ['password'] },
+  })
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
+});
 
-    res.status(200).json(recipient);
-  } catch (err) {
-    res.json(err);
+// // GET user by email as recipient when CREATE new conversation
+router.get('/email/:email', async (req, res) => {
+  console.log('\n\nGetting user by email', req.params.email);
+
+  try {
+    const response = await User.findOne({ where: { email: req.params.email } });
+    if (response) {
+      res.json(response);
+      return;
+    }
+    res.status(404).json({ message: 'User not found' });
+  } catch (error) {
+    res.json(error);
   }
 });
 
@@ -77,14 +75,14 @@ router.post('/', async (req, res) => {
       res.status(200).json(newUser);
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json(err);
   }
 });
 
 // Login
 router.post('/login', async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const user = await User.findOne({
       where: { email: req.body.email },
@@ -106,11 +104,11 @@ router.post('/login', async (req, res) => {
       req.session.user_id = user.id;
       req.session.loggedIn = true;
 
-      console.log('\n\nLogged in...');
+      // console.log('\n\nLogged in...');
       res.status(200).json({ message: 'You are now logged in' });
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.status(500).json(err);
   }
 });
@@ -166,7 +164,7 @@ router.delete('/:id', (req, res) => {
       res.json(dbUserData);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       res.status(500).json(err);
     });
 });

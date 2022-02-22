@@ -47,50 +47,55 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// not needed for our functioning app. This route is handled in ../home-routes.js
 // conversations by user
-router.get('/', async (req, res) => {
-  try {
-    const dbConversations = await Participant.findAll({
-      where: { user_id: 1 },
-      include: [
-        {
-          model: User,
-          attributes: ['username'],
-        },
-        {
-          model: Conversation,
-          attributes: ['conversation_name', 'updated_at'],
-          include: [
-            {
-              model: Message,
-              attributes: { exclude: ['created_at', 'conversation_id'] },
-              include: [
-                {
-                  model: User,
-                  attributes: ['username'],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      // order by user_id decending
-      order: [
-        [{ model: Conversation }, 'updated_at', 'DESC'],
-        [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
-      ],
-    });
+// router.get('/', async (req, res) => {
+//   if (!req.session.loggedIn) {
+//    res.status(400).json({message:'Not logged in'});
+//     return;
+//   }
+//   try {
+//     const dbConversations = await Participant.findAll({
+//       where: { user_id: req.session.user_id },
+//       include: [
+//         {
+//           model: User,
+//           attributes: ['username'],
+//         },
+//         {
+//           model: Conversation,
+//           attributes: ['conversation_name', 'updated_at'],
+//           include: [
+//             {
+//               model: Message,
+//               attributes: { exclude: ['created_at', 'conversation_id'] },
+//               include: [
+//                 {
+//                   model: User,
+//                   attributes: ['username'],
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//       ],
+//       // order by user_id decending
+//       order: [
+//         [{ model: Conversation }, 'updated_at', 'DESC'],
+//         [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
+//       ],
+//     });
 
-    // res.json(conversations);
-    const conversations = dbConversations.map((conversation) =>
-      conversation.get({ plain: true })
-    );
-    // console.log(conversations);
-    res.render('home', { conversations });
-  } catch (err) {
-    res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
-  }
-});
+//     // res.json(conversations);
+//     const conversations = dbConversations.map((conversation) =>
+//       conversation.get({ plain: true })
+//     );
+//     // console.log(conversations);
+//     res.render('home', { conversations });
+//   } catch (err) {
+//     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
+//   }
+// });
 
 // CREATE new conversation
 router.post('/create', withAuth, async (req, res) => {
@@ -98,17 +103,22 @@ router.post('/create', withAuth, async (req, res) => {
     conversation_name: req.body.conversation_name,
   });
 
-  const participants = await Participant.create({
+  const sender = await Participant.create({
     user_id: req.session.user_id,
     conversation_id: conversation.id,
   });
 
-  // TODO:  [ ] how to render this new conversation by id?
+  //  TODO: [ ] - eventually add multiple users at a time (ie. from comma-separated values)
+  const recipient = await Participant.create({
+    user_id: req.body.recipient_id,
+    conversation_id: conversation.id,
+  });
+
   res.json({ conversation });
   // res.render('conversation', { conversation });
 });
 
-// UPDATE conversation_messages
+// UPDATE conversation participants
 router.put('/add-participant', async (req, res) => {
   // get user_id from email
   const { id } = await User.findOne({
@@ -116,12 +126,12 @@ router.put('/add-participant', async (req, res) => {
     attributes: ['id'],
   });
 
-  if (user_id) {
+  if (id) {
     Conversation.addParticipant({ ...req.body, user_id: id }, { Participant })
       .then((updatedConversationData) => res.json(updatedConversationData))
-      .catch((err) => res.jwon(err));
+      .catch((err) => res.json(err));
   }
-  res.json({ message: 'Not correct', user_id });
+  res.json({ message: 'Not correct', user_id: id });
 });
 
 // * UPDATE conversation_participants

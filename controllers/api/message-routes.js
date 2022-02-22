@@ -64,7 +64,11 @@ router.get('/:id', async (req, res) => {
 // request and pass in the currently logged in user_id (eg, req.session.user_id), and the current
 // conversation_id
 
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
+  if (!req.session.loggedIn) {
+    res.json({ message: 'Must be logged in' });
+    return;
+  }
   Message.create({
     message_text: req.body.message_text,
     user_id: req.session.user_id,

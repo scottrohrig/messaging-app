@@ -5,10 +5,38 @@
   {{/each}}
 </ul>
 
-<div class="form" >
+<form class="form" id="messageForm">
   <div class="d-flex">
   {{!-- <label for="new-message" class="form-label"></label> --}}
   <textarea id="new-message" rows='3' class="form-control flex" placeholder="message"></textarea>
-  <button class="btn btn-primary ms-3 ">send</button>
+    <button type='submit' class="btn btn-primary ms-1 send-btn" data-cid="{{conversation.id}}">send</button>
+  </div>
+</form>
+<div class="d-flex flex-column mt-1">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPeopleModal" data-bs-cid="{{conversation.id}}">add people</button>
+</div>
+
+<div class="modal fade" id="addPeopleModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <button type='button' class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <div class="d-flex flex-column">
+            <label for="new-participant" class="form-label">New Person:</label>
+            <input type="text" class="form-control" id='add-person-email' placeholder="example@email.com">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+            <button class="btn btn-primary">confirm</button>
+      </div>
+    </div>
   </div>
 </div>
+
+<script src='/scripts/message.js'></script>
