@@ -43,8 +43,6 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    console.log(req.session);
-    // res.json(conversations);
     const conversations = dbConversations.map((conversation) =>
       conversation.get({ plain: true })
     );
@@ -66,11 +64,9 @@ router.get('/conversations/:id', async (req, res) => {
       },
     ],
   });
-  console.log('\n\n', conversationData);
 
   const conversation = conversationData.get({ plain: true });
 
-  console.log('\n\n', { conversation });
   res.render('conversation', { conversation });
 });
 

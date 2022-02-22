@@ -3,11 +3,10 @@
 const handleDeleteConversation = async (e) => {
   e.preventDefault();
 
-  console.log('delete');
 
   const id = e.target.closest('.delete-btn').dataset.cid;
 
-  console.log('deleting conversation', id);
+  // console.log('deleting conversation', id);
   const response = await fetch(`/api/conversations/${id}`, {
     method: 'DELETE',
   });

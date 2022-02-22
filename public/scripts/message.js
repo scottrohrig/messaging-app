@@ -13,7 +13,6 @@ async function messageFormHandler(event) {
     },
     headers: { 'Content-Type': 'application/json' },
   });
-  console.log('message', message);
 
   if (message.ok) {
     document.location.reload();
