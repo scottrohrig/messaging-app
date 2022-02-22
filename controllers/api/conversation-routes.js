@@ -47,9 +47,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// not needed for our functioning app. This route is handled in ../home-routes.js
 // conversations by user
 // router.get('/', async (req, res) => {
-//   if (!req.session) {
+//   if (!req.session.loggedIn) {
+//    res.status(400).json({message:'Not logged in'});
 //     return;
 //   }
 //   try {
