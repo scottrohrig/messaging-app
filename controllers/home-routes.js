@@ -11,8 +11,6 @@ router.get('/', async (req, res) => {
 
   try {
     const dbConversations = await Participant.findAll({
-      // TODO: [ ] use req.session.user_id
-      // Error: user_id doesn't exist yet.
       where: { user_id: req.session.user_id },
       include: [
         {
@@ -38,7 +36,7 @@ router.get('/', async (req, res) => {
       ],
       // order by user_id decending
       order: [
-        [{ model: Conversation }, 'updated_at', 'DESC'],
+        // [{ model: Conversation }, 'updated_at', 'DESC'], // was unneeded
         [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
       ],
     });
@@ -63,6 +61,7 @@ router.get('/conversations/:id', async (req, res) => {
         include: [User],
       },
     ],
+    order: [[{ model: Message }, 'created_at', 'ASC']],
   });
 
   const conversation = conversationData.get({ plain: true });
