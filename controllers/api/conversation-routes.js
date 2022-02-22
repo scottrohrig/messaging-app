@@ -98,17 +98,22 @@ router.post('/create', withAuth, async (req, res) => {
     conversation_name: req.body.conversation_name,
   });
 
-  const participants = await Participant.create({
+  const sender = await Participant.create({
     user_id: req.session.user_id,
     conversation_id: conversation.id,
   });
 
-  // TODO:  [ ] how to render this new conversation by id?
+  //  TODO: [ ] - eventually add multiple users at a time (ie. from comma-separated values)
+  const recipient = await Participant.create({
+    user_id: req.body.recipient_id,
+    conversation_id: conversation.id,
+  });
+
   res.json({ conversation });
   // res.render('conversation', { conversation });
 });
 
-// UPDATE conversation_messages
+// UPDATE conversation participants
 router.put('/add-participant', async (req, res) => {
   // get user_id from email
   const { id } = await User.findOne({
@@ -116,12 +121,12 @@ router.put('/add-participant', async (req, res) => {
     attributes: ['id'],
   });
 
-  if (user_id) {
+  if (id) {
     Conversation.addParticipant({ ...req.body, user_id: id }, { Participant })
       .then((updatedConversationData) => res.json(updatedConversationData))
-      .catch((err) => res.jwon(err));
+      .catch((err) => res.json(err));
   }
-  res.json({ message: 'Not correct', user_id });
+  res.json({ message: 'Not correct', user_id: id });
 });
 
 // * UPDATE conversation_participants

@@ -6,41 +6,49 @@ const handleCreateConversation = async (e) => {
   const conversationName = document
     .getElementById('conversation-title')
     .value.trim();
-  const recipient = document.getElementById('email-recipient').value.trim();
+  const recipientEmail = document
+    .getElementById('email-recipient')
+    .value.trim();
 
-  if (!conversationName || !recipient) {
+  if (!conversationName || !recipientEmail) {
     return;
   }
-  console.log('Fetching email...', conversationName, recipient);
-  const emailResponse = await fetch(`/api/users/${recipient}`);
+  console.log('Fetching email...', conversationName, recipientEmail);
 
-  console.log('Validating email...');
-  if (!emailResponse.ok) {
-    alert('No user with that email!');
-    return;
-  }
+  const recipientURL = `/api/users/email/${recipientEmail}`;
+  const emailResponse = await fetch(recipientURL);
 
-  console.log('Fetching Conversation...');
-  fetch('/api/conversations/create', {
-    method: 'post',
-    body: JSON.stringify({
-      conversation_name: conversationName,
-      email: recipient,
-    }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then((conversationResponse) => {
-      console.log('Validating Conversation...');
-      if (!conversationResponse.ok) {
-        console.log(conversationResponse.json());
-        alert(conversationResponse.statusText);
-        return;
-      }
-      return conversationResponse.json();
+  const recipient = await emailResponse.json();
+
+  console.log('Validating email...', recipient.id);
+
+  if (recipient.id) {
+    fetch('/api/conversations/create', {
+      method: 'post',
+      body: JSON.stringify({
+        conversation_name: conversationName,
+        recipient_id: recipient.id,
+        email: recipient,
+      }),
+      headers: { 'Content-Type': 'application/json' },
     })
-    .then(({ conversation }) =>
-      document.location.replace(`/conversations/${conversation.id}`)
-    );
+      .then((conversationResponse) => {
+        // console.log('Validating Conversation...');
+        if (!conversationResponse.ok) {
+          // console.log(conversationResponse.json());
+          alert(conversationResponse.statusText);
+          return;
+        }
+        return conversationResponse.json();
+      })
+      .then(({ conversation }) =>
+        document.location.replace(`/conversations/${conversation.id}`)
+      );
+  } else {
+    alert('No user with that email!');
+  }
+
+  // console.log('Fetching Conversation...');
 };
 
 document
