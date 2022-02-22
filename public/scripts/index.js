@@ -6,7 +6,6 @@ const handleDeleteConversation = async (e) => {
 
   const id = e.target.closest('.delete-btn').dataset.cid;
 
-  // console.log('deleting conversation', id);
   const response = await fetch(`/api/conversations/${id}`, {
     method: 'DELETE',
   });
