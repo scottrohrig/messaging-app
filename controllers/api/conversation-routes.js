@@ -103,16 +103,18 @@ router.post('/create', withAuth, async (req, res) => {
     conversation_name: req.body.conversation_name,
   });
 
-  const sender = await Participant.create({
-    user_id: req.session.user_id,
-    conversation_id: conversation.id,
-  });
+  const participants = [
+    {
+      user_id: req.session.user_id,
+      conversation_id: conversation.id,
+    },
+    {
+      user_id: req.body.recipient_id,
+      conversation_id: conversation.id,
+    },
+  ];
 
-  //  TODO: [ ] - eventually add multiple users at a time (ie. from comma-separated values)
-  const recipient = await Participant.create({
-    user_id: req.body.recipient_id,
-    conversation_id: conversation.id,
-  });
+  Participant.bulkCreate(participants, { individualHooks: true });
 
   res.json({ conversation });
   // res.render('conversation', { conversation });
