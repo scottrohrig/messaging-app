@@ -66,7 +66,7 @@ router.get('/conversations/:id', async (req, res) => {
 
   const conversation = conversationData.get({ plain: true });
 
-  res.render('conversation', { conversation });
+  res.render('conversation', { conversation, loggedIn: req.session.loggedIn });
 });
 
 router.get('/login', (req, res) => {
