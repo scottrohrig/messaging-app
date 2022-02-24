@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // GET all users
 router.get('/', async (req, res) => {
@@ -31,11 +32,14 @@ router.get('/:id', (req, res) => {
 });
 
 // // GET user by email as recipient when CREATE new conversation
-router.get('/email/:email', async (req, res) => {
+router.get('/email/:email', withAuth, async (req, res) => {
   console.log('\n\nGetting user by email', req.params.email);
 
   try {
-    const response = await User.findOne({ where: { email: req.params.email } });
+    const response = await User.findOne({
+      where: { email: req.params.email },
+      attributes: { exclude: ['password'] },
+    });
     if (response) {
       res.json(response);
       return;
