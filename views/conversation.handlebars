@@ -1,20 +1,33 @@
 
-<ul class="list-group border-0 h-75">
-  {{#each conversation.messages as |message|}}
-  {{> message-details}}
-  {{/each}}
-</ul>
 
-<form class="form" id="messageForm">
-  <div class="d-flex">
-  {{!-- <label for="new-message" class="form-label"></label> --}}
-  <textarea id="new-message" rows='3' class="form-control flex" placeholder="message"></textarea>
-    <button type='submit' class="btn btn-primary ms-1 send-btn" data-cid="{{conversation.id}}">send</button>
+    <div
+      class="message-ul list-group border-info overflow-scroll my-3"
+      style="max-height: calc(100% - 250px);"
+      id="messages"
+      >
+      {{#each conversation.messages as |message|}}
+      {{> message-details}}
+      {{/each}}
+    </div>
+
+
+
+
+<div class=" fixed-bottom  p-3">
+  <div class="container-fluid">
+    <form class="form" id="messageForm">
+      <div class="d-flex">
+      {{!-- <label for="new-message" class="form-label"></label> --}}
+      <textarea id="new-message" rows='3' class="form-control flex" placeholder="message"></textarea>
+        <button type='submit' class="btn btn-primary ms-1 send-btn" data-cid="{{conversation.id}}">send</button>
+      </div>
+      <div class="d-flex flex-column mt-1">
+        <button type="button" class="confirm btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPeopleModal" data-bs-cid="{{conversation.id}}">add people</button>
+      </div>
+    </form>
   </div>
-</form>
-<div class="d-flex flex-column mt-1">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPeopleModal" data-bs-cid="{{conversation.id}}">add people</button>
 </div>
+
 
 <div class="modal fade" id="addPeopleModal">
   <div class="modal-dialog modal-dialog-centered">
@@ -25,15 +38,13 @@
         </h5>
       </div>
       <div class="modal-body">
-        <form action="">
-          <div class="d-flex flex-column">
-            <label for="new-participant" class="form-label">New Person:</label>
-            <input type="text" class="form-control" id='add-person-email' placeholder="example@email.com">
-          </div>
-        </form>
+        <div class="form-floating">
+          <input type="email" class="form-control" id='add-person-email' placeholder="example@email.com">
+          <label for="add-person-email">add by email</label>
+        </div>
       </div>
-      <div class="modal-footer">
-            <button class="btn btn-primary">confirm</button>
+      <div class="modal-footer"> {{conversation.id}}
+            <button class="btn btn-primary" data-cid={{conversation.id}} data-modal-confirm>confirm</button>
       </div>
     </div>
   </div>
@@ -41,4 +52,31 @@
 
 {{#if loggedIn}}
   <script src='/scripts/message.js'></script>
+
+  {{!
+  <script>
+    var socket = io();
+
+    var messages = document.getElementById('messages')
+    var form = document.getElementById('messageForm')
+    var input = document.getElementById('new-message')
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (input.value){
+        // send the text value to the 'chat message' event
+        socket.emit('chat message', input.value);
+        // clear the textarea
+        input.value= '';
+      }
+    });
+
+    socket.on('chat message', function(msg) {
+      var item = document.createElement('li')
+      item.textContent = msg
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight)
+    })
+  </script>
+  }}
 {{/if}}
