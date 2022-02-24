@@ -1,29 +1,8 @@
-{{! I'm the 'conversation-details' partial.
-My job is to display the
-details of the conversation
-e.g., profile picture, username,
-timestamp, message text preview
- }}
-
-{{!--
-TODO:
-    [ ]: use a list item tag <li> to wrap the details
-    [ ]: use a div to divide the li into 3 columns
-            (profile pic, message content, delete icon)
-    [ ]: the profile pic should have a div with an img tag
-            the img tag's src should reference the user's image src="/images/{{pfp}}"
-    [ ]: the message content should have the: username, timestamp & message text
-    [ ]: and the last column should have a div with the delete icon center-aligned
- --}}
 <li class='list-group-item'>
-  {{!-- {{#each this}} --}}
-
   <div class='row justify-content-between'>
-
     <div
       class='col-1 avatar d-flex align-items-center justify-content-center mx-2'
     >
-
       <img
         class='border rounded-circle'
         style='height: 48px'
@@ -60,5 +39,4 @@ TODO:
       ><i class='bi bi-trash'></i></button>
     </div>
   </div>
-  {{!-- {{/each}} --}}
 </li>
