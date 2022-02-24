@@ -1,17 +1,10 @@
 <li class='list-group-item border-0 py-2 px-0'>
   <div class='d-flex align-items-center justify-content-center'>
     {{!-- {{user.id}} TODO: check sender_id--}}
-  {{#if (isSender user.username 'mickey' )}}
+  {{#if (isSender user.id 1 )}}
     {{> message-left}}
   {{else}}
     {{> message-right}}
   {{/if}}
   </div>
-
-  {{!-- <div class='send-btn'>
-    <button type='button' class='send'>
-      <i class="bi bi-arrow-up-circle-fill"></i>
-    </button>
-  </div> --}}
-
 </form>
