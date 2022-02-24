@@ -27,6 +27,39 @@ document
   .querySelector('#messageForm')
   .addEventListener('submit', messageFormHandler);
 
+$('[data-modal-confirm]').click(async () => {
+  const email = $('#add-person-email').val().trim();
+  const conversationId = $('[data-modal-confirm]').data('cid');
+
+  const recipientURL = `/api/users/email/${email}`;
+  const emailResponse = await fetch(recipientURL);
+
+  const recipient = await emailResponse.json();
+  if (recipient.id) {
+    console.log(recipient.id);
+    fetch('/api/conversations/add-participant', {
+      method: 'post',
+      body: JSON.stringify({
+        conversation_id: conversationId,
+        user_id: recipient.id,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((conversationResponse) => {
+        // console.log('Validating Conversation...');
+        if (!conversationResponse.ok) {
+          // console.log(conversationResponse.json());
+          alert(conversationResponse.statusText);
+          return;
+        }
+        return conversationResponse.json();
+      })
+      .then(() => document.location.reload());
+  } else {
+    alert('No user with that email!');
+  }
+});
+
 // const addPeopleModal = document.getElementById('addPeopleModal');
 // addPeopleModal.addEventListener('show.bs.modal', function (event) {
 //   // Button that triggered the modal
