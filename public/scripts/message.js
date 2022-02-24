@@ -36,35 +36,52 @@ $('[data-modal-confirm]').click(async () => {
   const emailResponse = await fetch(recipientURL);
 
   const recipient = await emailResponse.json();
+
   if (recipient.id) {
-    const { participants } = await fetch(
-      `/api/conversations/participants/${conversationId}`
+    let participants = await fetch(
+      `/api/conversations/participants/${conversationId}`,
+      {
+        method: 'post',
+        body: JSON.stringify({
+          user_id: recipient.id,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      }
     );
-    if (participants.length) {
-      console.log('\nokay...');
+    // console.log('\nokay...');
+    participants = await participants.json();
+
+    if (participants) {
+      const user = participants.filter(
+        (participant) => participant.user_id === recipient.id
+      );
+      if (user.length > 0) {
+        // console.log('user found', user);
+      } else {
+        // add to conversation
+        fetch('/api/conversations/add-participant', {
+          method: 'post',
+          body: JSON.stringify({
+            conversation_id: conversationId,
+            user_id: recipient.id,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+        })
+          .then(async (conversationResponse) => {
+            // console.log('Validating Conversation...');
+            if (!conversationResponse.ok) {
+              // console.log(conversationResponse.json());
+              alert(conversationResponse.statusText);
+              return;
+            }
+            const res = await conversationResponse.json();
+            console.log(res);
+            return res;
+          })
+          .then(() => document.location.reload());
+      }
     }
-    // still validating user does not already exist in the conversation
-    return;
-    fetch('/api/conversations/add-participant', {
-      method: 'post',
-      body: JSON.stringify({
-        conversation_id: conversationId,
-        user_id: recipient.id,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((conversationResponse) => {
-        // console.log('Validating Conversation...');
-        if (!conversationResponse.ok) {
-          // console.log(conversationResponse.json());
-          alert(conversationResponse.statusText);
-          return;
-        }
-        const res = conversationResponse.json();
-        console.log(res);
-        return res;
-      })
-      .then(() => document.location.reload());
+  } else {
+    alert('No user with that email.');
   }
-  alert('No user with that email.');
 });
