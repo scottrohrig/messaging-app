@@ -36,8 +36,8 @@ router.get('/', async (req, res) => {
       ],
       // order by user_id decending
       order: [
-        // [{ model: Conversation }, 'updated_at', 'DESC'], // was unneeded
-        [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
+        [{ model: Conversation }, 'updated_at', 'DESC'],
+        [{ model: Conversation }, { model: Message }, 'created_at', 'ASC'],
       ],
     });
 
@@ -66,7 +66,7 @@ router.get('/conversations/:id', async (req, res) => {
 
   const conversation = conversationData.get({ plain: true });
 
-  res.render('conversation', { conversation });
+  res.render('conversation', { conversation, loggedIn: req.session.loggedIn });
 });
 
 router.get('/login', (req, res) => {

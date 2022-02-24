@@ -18,7 +18,8 @@
     "func-names": "off",
     "quotes": ["error", "single"],
     "comma-dangle": "off",
-    "indent": ["error", 2]
-    },
+    "indent": ["error", 2],
+    "consistent-return": "off"
+  },
   "plugins": ["prettier"]
 }

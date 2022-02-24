@@ -1,4 +1,7 @@
 /* eslint-disable no-undef */
+
+// const axios = require('axios').default;
+
 /* eslint-disable no-alert */
 const handleCreateConversation = async (e) => {
   e.preventDefault();
@@ -20,9 +23,19 @@ const handleCreateConversation = async (e) => {
 
   const recipient = await emailResponse.json();
 
-  console.log('Validating email...', recipient.id);
-
   if (recipient.id) {
+    console.log('Validating email...', recipient.id);
+
+    // axios({
+    //   method: 'POST',
+    //   url: '/api/conversations/create',
+    //   timeout: 4000,
+    //   data: {
+    //     conversation_name: conversationName,
+    //     recipient_id: recipient.id,
+    //     email: recipient,
+    //   },
+    // } )
     fetch('/api/conversations/create', {
       method: 'post',
       body: JSON.stringify({

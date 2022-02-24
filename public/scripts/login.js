@@ -16,9 +16,7 @@ async function loginFormHandler(event) {
     });
 
     if (response.ok) {
-      console.log('response ok', response);
-
-      await setTimeout(() => {
+      setTimeout(() => {
         document.location.replace('/');
       }, 100);
     } else {

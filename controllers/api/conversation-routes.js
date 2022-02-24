@@ -47,55 +47,18 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// not needed for our functioning app. This route is handled in ../home-routes.js
-// conversations by user
-// router.get('/', async (req, res) => {
-//   if (!req.session.loggedIn) {
-//    res.status(400).json({message:'Not logged in'});
-//     return;
-//   }
-//   try {
-//     const dbConversations = await Participant.findAll({
-//       where: { user_id: req.session.user_id },
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['username'],
-//         },
-//         {
-//           model: Conversation,
-//           attributes: ['conversation_name', 'updated_at'],
-//           include: [
-//             {
-//               model: Message,
-//               attributes: { exclude: ['created_at', 'conversation_id'] },
-//               include: [
-//                 {
-//                   model: User,
-//                   attributes: ['username'],
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       ],
-//       // order by user_id decending
-//       order: [
-//         [{ model: Conversation }, 'updated_at', 'DESC'],
-//         [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
-//       ],
-//     });
+router.get('/participants/:id', async (req, res) => {
+  try {
+    const [participants] = await Participant.findAll({
+      where: { conversation_id: req.params.id },
+    });
 
-//     // res.json(conversations);
-//     const conversations = dbConversations.map((conversation) =>
-//       conversation.get({ plain: true })
-//     );
-//     // console.log(conversations);
-//     res.render('home', { conversations });
-//   } catch (err) {
-//     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
-//   }
-// });
+    console.log('\n\nparticipants\n', participants);
+    res.json(participants);
+  } catch (err) {
+    res.json({ statusText: 'This user is already in the conversation' });
+  }
+});
 
 // CREATE new conversation
 router.post('/create', withAuth, async (req, res) => {
@@ -103,35 +66,30 @@ router.post('/create', withAuth, async (req, res) => {
     conversation_name: req.body.conversation_name,
   });
 
-  const sender = await Participant.create({
-    user_id: req.session.user_id,
-    conversation_id: conversation.id,
-  });
+  const participants = [
+    {
+      user_id: req.session.user_id,
+      conversation_id: conversation.id,
+    },
+    {
+      user_id: req.body.recipient_id,
+      conversation_id: conversation.id,
+    },
+  ];
 
-  //  TODO: [ ] - eventually add multiple users at a time (ie. from comma-separated values)
-  const recipient = await Participant.create({
-    user_id: req.body.recipient_id,
-    conversation_id: conversation.id,
-  });
+  Participant.bulkCreate(participants, { individualHooks: true });
 
   res.json({ conversation });
   // res.render('conversation', { conversation });
 });
 
 // UPDATE conversation participants
-router.put('/add-participant', async (req, res) => {
-  // get user_id from email
-  const { id } = await User.findOne({
-    where: { email: req.body.email },
-    attributes: ['id'],
-  });
+router.post('/add-participant', async (req, res) => {
+  console.log('\n\nMaking Participant', req.body);
 
-  if (id) {
-    Conversation.addParticipant({ ...req.body, user_id: id }, { Participant })
-      .then((updatedConversationData) => res.json(updatedConversationData))
-      .catch((err) => res.json(err));
-  }
-  res.json({ message: 'Not correct', user_id: id });
+  Conversation.addParticipant(req.body, { Participant })
+    .then((updatedConversationData) => res.json(updatedConversationData))
+    .catch((err) => res.json(err));
 });
 
 // * UPDATE conversation_participants

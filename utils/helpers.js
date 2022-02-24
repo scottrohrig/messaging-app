@@ -18,6 +18,16 @@ module.exports = {
     return messages[messages.length - 1].user.pfp_path;
   },
   formatTime: (timestamp) => {
-    return new Date(timestamp).toLocaleTimeString();
+    const time = new Date(timestamp).toLocaleTimeString({
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const ftime = `${time.split(':')[0]}:${time.split(':')[1]} ${
+      time.split(' ')[1]
+    }`;
+    return ftime;
+  },
+  isSender: (username, sender) => {
+    return username === sender;
   },
 };
