@@ -47,6 +47,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/participants/:id', async (req, res) => {
+  try {
+    const [participants] = await Participant.findAll({
+      where: { conversation_id: req.params.id },
+    });
+
+    console.log('\n\nparticipants\n', participants);
+    res.json(participants);
+  } catch (err) {
+    res.json({ statusText: 'This user is already in the conversation' });
+  }
+});
+
 // CREATE new conversation
 router.post('/create', withAuth, async (req, res) => {
   const conversation = await Conversation.create({
