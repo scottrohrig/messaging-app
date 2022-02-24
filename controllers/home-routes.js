@@ -36,8 +36,8 @@ router.get('/', async (req, res) => {
       ],
       // order by user_id decending
       order: [
-        // [{ model: Conversation }, 'updated_at', 'DESC'], // was unneeded
-        [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
+        [{ model: Conversation }, 'updated_at', 'DESC'],
+        [{ model: Conversation }, { model: Message }, 'created_at', 'ASC'],
       ],
     });
 
