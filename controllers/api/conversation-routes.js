@@ -47,56 +47,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// not needed for our functioning app. This route is handled in ../home-routes.js
-// conversations by user
-// router.get('/', async (req, res) => {
-//   if (!req.session.loggedIn) {
-//    res.status(400).json({message:'Not logged in'});
-//     return;
-//   }
-//   try {
-//     const dbConversations = await Participant.findAll({
-//       where: { user_id: req.session.user_id },
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['username'],
-//         },
-//         {
-//           model: Conversation,
-//           attributes: ['conversation_name', 'updated_at'],
-//           include: [
-//             {
-//               model: Message,
-//               attributes: { exclude: ['created_at', 'conversation_id'] },
-//               include: [
-//                 {
-//                   model: User,
-//                   attributes: ['username'],
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       ],
-//       // order by user_id decending
-//       order: [
-//         [{ model: Conversation }, 'updated_at', 'DESC'],
-//         [{ model: Conversation }, { model: Message }, 'created_at', 'DESC'],
-//       ],
-//     });
-
-//     // res.json(conversations);
-//     const conversations = dbConversations.map((conversation) =>
-//       conversation.get({ plain: true })
-//     );
-//     // console.log(conversations);
-//     res.render('home', { conversations });
-//   } catch (err) {
-//     res.status(500).send(`<h1>ERROR: </h1><p>${err.message}</p>`);
-//   }
-// });
-
 // CREATE new conversation
 router.post('/create', withAuth, async (req, res) => {
   const conversation = await Conversation.create({
@@ -121,19 +71,12 @@ router.post('/create', withAuth, async (req, res) => {
 });
 
 // UPDATE conversation participants
-router.put('/add-participant', async (req, res) => {
-  // get user_id from email
-  const { id } = await User.findOne({
-    where: { email: req.body.email },
-    attributes: ['id'],
-  });
+router.post('/add-participant', async (req, res) => {
+  console.log('\n\nMaking Participant', req.body);
 
-  if (id) {
-    Conversation.addParticipant({ ...req.body, user_id: id }, { Participant })
-      .then((updatedConversationData) => res.json(updatedConversationData))
-      .catch((err) => res.json(err));
-  }
-  res.json({ message: 'Not correct', user_id: id });
+  Conversation.addParticipant(req.body, { Participant })
+    .then((updatedConversationData) => res.json(updatedConversationData))
+    .catch((err) => res.json(err));
 });
 
 // * UPDATE conversation_participants
