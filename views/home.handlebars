@@ -1,5 +1,7 @@
-<section class="card h-75 rounded-5 ">
-  <h2 class="card-header">conversations</h2>
+<section 
+  class="card rounded-5 " 
+  style="max-height: calc(100% - 166px);"
+  >
   <div class="card-body overflow-auto">
     <ul class=" list-group list-group-flush " id="conversation-list">
       {{#each conversations as |conversation|}}
@@ -9,8 +11,12 @@
   </div>
 </section>
 
-<div class="d-flex mt-3 justify-content-end">
-  <a href="/new-conversation" class="col col-md-3 btn btn-primary new-conversation-btn text-white" style="text-decoration: none;">new conversation</a>
+<div class="fixed-bottom mb-3 p-3">
+  <div class="container d-flex mt-3 justify-content-end">
+    <a href="/new-conversation" class="col col-md-3 btn btn-primary new-conversation-btn text-white" style="text-decoration: none;">
+      <i class="fs-4 bi bi-send-plus text-white"></i>
+    </a>
+  </div>
 </div>
 
 {{#if loggedIn}}
