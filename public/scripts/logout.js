@@ -6,7 +6,9 @@ async function logout() {
   });
 
   if (response.ok) {
-    document.location.replace('/login');
+    setTimeout(() => {
+      document.location.replace('/login');
+    }, 200);
   } else {
     // eslint-disable-next-line no-alert
     alert(response.statusText);
