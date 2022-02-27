@@ -24,7 +24,8 @@
     "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.15.1"
+    "sequelize": "^6.15.1",
+    "socket.io": "^4.4.1"
   },
   "devDependencies": {
     "eslint": "^8.8.0",

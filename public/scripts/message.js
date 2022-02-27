@@ -1,6 +1,15 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+
+const socket = io();
+
+window.addEventListener('load', (e) => {
+  const messages = document.getElementById('messages');
+
+  messages.scrollTop = messages.scrollHeight;
+});
+
 async function messageFormHandler(event) {
   event.preventDefault();
 
@@ -9,6 +18,12 @@ async function messageFormHandler(event) {
 
   const msgText = document.getElementById('new-message').value.trim();
   const id = sendBtn.dataset.cid;
+
+  if (!msgText) {
+    console.log('enter text to send msg');
+    return;
+  }
+  console.log('msg created');
 
   const message = await fetch('/api/messages', {
     method: 'post',
@@ -20,13 +35,36 @@ async function messageFormHandler(event) {
   });
 
   if (message.ok) {
-    document.location.reload();
+    const messageData = await message.json();
+
+    socket.emit('new message', messageData);
   }
 }
 
 document
   .querySelector('#messageForm')
   .addEventListener('submit', messageFormHandler);
+
+socket.on('new message', (message) => {
+  console.log('message recieved', message);
+  // document.location.reload();
+
+  const { message_text, conversation_id, user_id } = message;
+
+  const messages = document.getElementById('messages');
+
+  const oldHtml = messages.innerHTML;
+
+  
+
+  const msgLi = Handlebars.compile(msgTemplate)
+
+  messages.innerHTML = `
+  `;
+
+  messages.scrollTop = messages.scrollHeight;
+  document.getElementById('new-message').value = '';
+});
 
 $('[data-modal-confirm]').click(async () => {
   const email = $('#add-person-email').val().trim();
