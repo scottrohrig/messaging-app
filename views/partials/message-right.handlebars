@@ -3,14 +3,17 @@
   <p class='ts-6 lh-1 text-secondary'>{{formatTime created_at}}</p>
 </div>
 <div
-  class='position-relative flex-grow-1 text-secondary bg-light px-2 py-3 rounded-3 rounded-start'
+  class='position-relative flex-grow-1 text-dark bg-light px-2 py-3 rounded-3 rounded-start'
 >
   <svg
     width='2em'
     height='2.1em'
     viewBox='0 0 16 8'
     class='position-absolute top-0 start-0 translate-middle bi bi-caret-down-fill'
+    {{! bg-light }}
     fill='#f8f9fa'
+    {{! bg-sender }}
+    {{! fill='#8ff' }}
     xmlns='http://www.w3.org/2000/svg'
   >
     <path

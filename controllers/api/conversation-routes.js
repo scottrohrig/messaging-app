@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
           include: [
             {
               model: User,
-              attributes: ['username'],
+              attributes: ['username', 'id'],
             },
           ],
         },
@@ -47,9 +47,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/participants/:id', async (req, res) => {
+router.post('/participants/:id', async (req, res) => {
   try {
-    const [participants] = await Participant.findAll({
+    const participants = await Participant.findAll({
       where: { conversation_id: req.params.id },
     });
 

@@ -1,7 +1,7 @@
 
 
     <div
-      class="message-ul list-group border-info overflow-scroll my-3"
+      class="message-ul list-group border-info overflow-auto my-3"
       style="max-height: calc(100% - 250px);"
       id="messages"
       >
@@ -14,20 +14,23 @@
 
 
 <div class=" fixed-bottom  p-3">
-  <div class="container-fluid">
+  <div class="container">
     <form class="form" id="messageForm">
       <div class="d-flex">
       {{!-- <label for="new-message" class="form-label"></label> --}}
       <textarea id="new-message" rows='3' class="form-control flex" placeholder="message"></textarea>
-        <button type='submit' class="btn btn-primary ms-1 send-btn" data-cid="{{conversation.id}}">send</button>
+        <button type='submit' class="btn btn-primary ms-1 send-btn" data-cid="{{conversation.id}}">
+          <i class="fs-3 bi bi-arrow-up-short text-white"></i>
+        </button>
       </div>
       <div class="d-flex flex-column mt-1">
-        <button type="button" class="confirm btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPeopleModal" data-bs-cid="{{conversation.id}}">add people</button>
+        <button type="button" class="confirm btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPeopleModal" data-bs-cid="{{conversation.id}}">
+          <i class="fs-3 bi bi-person-plus text-white"></i>
+        </button>
       </div>
     </form>
   </div>
 </div>
-
 
 <div class="modal fade" id="addPeopleModal">
   <div class="modal-dialog modal-dialog-centered">
@@ -43,7 +46,7 @@
           <label for="add-person-email">add by email</label>
         </div>
       </div>
-      <div class="modal-footer"> {{conversation.id}}
+      <div class="modal-footer">
             <button class="btn btn-primary" data-cid={{conversation.id}} data-modal-confirm>confirm</button>
       </div>
     </div>
