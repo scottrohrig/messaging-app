@@ -117,7 +117,7 @@ socket.on('new message', (message) => {
   const oldHtml = messages.innerHTML;
 
   // have to hardcode these bcause I can't get handlebars to register the partials from here
-  if ((user_id = 1)) {
+  if (user_id === 1) {
     messages.innerHTML = `${oldHtml} ${msgDetails(
       { message_text, conversation_id, user },
       0
